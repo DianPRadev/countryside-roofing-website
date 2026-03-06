@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Project Gallery | Countryside Roofing, Siding &amp; Windows</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;1,9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/shared.css"/>
+<style>
+/* ── FILTER BAR ── */
+.filter-bar {
+  background: var(--white);
+  border-bottom: 1px solid var(--g2);
+  position: sticky; top: 72px; z-index: 100;
+  padding: 0;
+}
+.filter-bar-in {
+  max-width: 1220px; margin: 0 auto; padding: 0 28px;
+  display: flex; align-items: center; gap: 6px;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.filter-btn {
+  padding: 14px 22px; border: none; background: none;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+  color: var(--g6); cursor: pointer; white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  transition: var(--transition);
+}
+.filter-btn:hover { color: var(--green); }
+.filter-btn.active { color: var(--green); border-bottom-color: var(--green); font-weight: 700; }
+.filter-count {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; background: var(--green-lt);
+  color: var(--green); border-radius: 20px; font-size: 11px;
+  font-weight: 700; margin-left: 6px;
+}
+.filter-btn.active .filter-count { background: var(--green); color: white; }
+
+/* ── GALLERY GRID ── */
+.gallery-section { padding: 60px 0 88px; }
+.gallery-count {
+  font-size: 14px; color: var(--g4); margin-bottom: 28px;
+}
+.gallery-count span { font-weight: 700; color: var(--green); }
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* Masonry-style: make some items bigger */
+.gallery-item {
+  position: relative; border-radius: var(--r);
+  overflow: hidden; cursor: pointer;
+  background: var(--g2);
+  transition: var(--transition);
+}
+.gallery-item.wide { grid-column: span 2; }
+.gallery-item.tall { grid-row: span 2; }
+.gallery-item.featured { grid-column: span 2; grid-row: span 2; }
+
+.gallery-item img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform .45s cubic-bezier(.4,0,.2,1);
+  min-height: 220px;
+}
+.gallery-item:hover img { transform: scale(1.06); }
+
+.gallery-item-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(26,42,26,.85) 0%, transparent 55%);
+  opacity: 0; transition: opacity .3s;
+  display: flex; align-items: flex-end; padding: 20px;
+}
+.gallery-item:hover .gallery-item-overlay { opacity: 1; }
+.overlay-content {}
+.overlay-tag {
+  display: inline-block; background: var(--gold);
+  color: var(--charcoal); font-size: 10px; font-weight: 700;
+  padding: 3px 9px; border-radius: 20px; letter-spacing: .06em;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.overlay-title { font-size: 15px; font-weight: 700; color: white; line-height: 1.3; }
+.overlay-sub { font-size: 12px; color: rgba(255,255,255,.65); margin-top: 3px; }
+.overlay-zoom {
+  position: absolute; top: 14px; right: 14px;
+  width: 36px; height: 36px; background: rgba(255,255,255,.15);
+  backdrop-filter: blur(6px); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity .3s;
+}
+.gallery-item:hover .overlay-zoom { opacity: 1; }
+
+/* Hidden items during filter */
+.gallery-item.hidden {
+  display: none;
+}
+
+/* ── CATEGORY SECTION HEADERS ── */
+.cat-header {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; gap: 16px;
+  padding: 12px 0 4px; margin-top: 8px;
+}
+.cat-header-line { flex: 1; height: 1px; background: var(--g2); }
+.cat-header-label {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 12px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--green3); white-space: nowrap;
+}
+
+/* ── LIGHTBOX ── */
+.lightbox {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(10,20,10,.94);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s;
+  padding: 24px;
+}
+.lightbox.open { opacity: 1; pointer-events: all; }
+.lightbox-inner {
+  position: relative; max-width: 1000px; width: 100%;
+  display: flex; flex-direction: column;
+}
+.lightbox-img-wrap {
+  position: relative; border-radius: var(--rl); overflow: hidden;
+  max-height: 75vh;
+}
+.lightbox-img-wrap img {
+  width: 100%; max-height: 75vh; object-fit: contain;
+  display: block; border-radius: var(--rl);
+}
+.lightbox-info {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 18px; flex-wrap: wrap; gap: 12px;
+}
+.lb-tag {
+  background: var(--gold); color: var(--charcoal);
+  font-size: 11px; font-weight: 700; padding: 4px 12px;
+  border-radius: 20px; letter-spacing: .05em; text-transform: uppercase;
+}
+.lb-title { font-family: 'Fraunces', serif; font-size: 20px; color: white; margin-top: 5px; }
+.lb-sub { font-size: 13px; color: rgba(255,255,255,.5); }
+.lb-close {
+  position: absolute; top: -14px; right: -14px;
+  width: 40px; height: 40px; background: white; border: none;
+  border-radius: 50%; cursor: pointer; font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--transition); z-index: 10;
+}
+.lb-close:hover { background: var(--gold); }
+.lb-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 48px; height: 48px;
+  background: rgba(255,255,255,.12); backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,.2); border-radius: 50%;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: var(--transition); color: white;
+}
+.lb-nav:hover { background: rgba(255,255,255,.25); }
+.lb-prev { left: -64px; }
+.lb-next { right: -64px; }
+.lb-counter { font-size: 13px; color: rgba(255,255,255,.45); }
+
+@media (max-width: 1024px) {
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+  .lb-prev { left: -48px; } .lb-next { right: -48px; }
+}
+@media (max-width: 768px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .gallery-item.wide, .gallery-item.featured { grid-column: span 1; }
+  .gallery-item.tall, .gallery-item.featured { grid-row: span 1; }
+  .lb-prev, .lb-next { display: none; }
+  .lightbox { padding: 14px; }
+}
+</style>
+</head>
+<body data-page="gallery">
+<div id="topbar-mount"></div>
+<div id="nav-mount"></div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-in">
+    <div class="ph-eyebrow"><span class="ph-dot"></span>Our Work</div>
+    <h1 class="ph-title fade-up">Project <em>Gallery</em></h1>
+    <p class="ph-sub fade-up fade-up-1">Browse completed roofing, siding, window, and gutter projects across Chicagoland. Every photo represents a family whose home we protected.</p>
+    <div class="ph-actions fade-up fade-up-2">
+      <a href="index.html#estimate" class="btn-primary">Get a Free Estimate</a>
+      <a href="tel:8472215600" class="btn-outline">📞 (847) 221-5600</a>
+    </div>
+  </div>
+</div>
+
+<div id="trust-bar-mount"></div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-bar-in">
+    <button class="filter-btn active" data-filter="all">All Projects <span class="filter-count">32</span></button>
+    <button class="filter-btn" data-filter="roofing">🏠 Roofing <span class="filter-count">12</span></button>
+    <button class="filter-btn" data-filter="siding">🏡 Siding <span class="filter-count">9</span></button>
+    <button class="filter-btn" data-filter="windows">🪟 Windows <span class="filter-count">6</span></button>
+    <button class="filter-btn" data-filter="gutters">🌧️ Gutters <span class="filter-count">3</span></button>
+    <button class="filter-btn" data-filter="storm">⚡ Storm Damage <span class="filter-count">2</span></button>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery-section">
+  <div class="con">
+    <div class="gallery-count">Showing <span id="visible-count">32</span> projects</div>
+    <div class="gallery-grid" id="gallery-grid">
+
+      <!-- ── ROOFING ── -->
+      <div class="cat-header" data-cat="roofing">
+        <div class="cat-header-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+          Roofing Projects
+        </div>
+        <div class="cat-header-line"></div>
+      </div>
+
+      <div class="gallery-item featured" data-cat="roofing" data-title="Complete Roof Replacement" data-location="Schaumburg, IL" data-tag="Roofing">
+        <img src="https://images.unsplash.com/photo-1632207691143-643e2a9a9361?w=900&q=80&fit=crop&crop=center" alt="New asphalt shingle roof replacement" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Roofing</div>
+            <div class="overlay-title">Complete Roof Replacement</div>
+            <div class="overlay-sub">Schaumburg, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item tall" data-cat="roofing" data-title="Tear-Off & New Installation" data-location="Palatine, IL" data-tag="Roofing">
+        <img src="https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=700&q=80&fit=crop&crop=top" alt="Residential roof installation" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Roofing</div>
+            <div class="overlay-title">Tear-Off &amp; New Installation</div>
+            <div class="overlay-sub">Palatine, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="roofing" data-title="Architectural Shingles" data-location="Barrington, IL" data-tag="Roofing">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80&fit=crop" alt="Suburban home with new roof" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Roofing</div>
+            <div class="overlay-title">Architectural Shingles</div>
+            <div class="overlay-sub">Barrington, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item wide" data-cat="roofing" data-title="Full Roof System with Ventilation" data-location="Arlington Heights, IL" data-tag="Roofing">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=80&fit=crop" alt="House with new roof" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Roofing</div>
+            <div class="overlay-title">Full Roof System with Ventilation</div>
+            <div class="overlay-sub">Arlington Heights, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="roofing" data-title="Professional Installation" data-location="Streamwood, IL" data-tag="Roofing">
+        <img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=700&q=80&fit=crop" alt="Roofers installing shingles" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Roofing</div>
+            <div class="overlay-title">Professional Installation</div>
+            <div class="overlay-sub">Streamwood, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="roofing" data-title="Ranch Home Replacement" data-location="Carol Stream, IL" data-tag="Roofing">
+        <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=700&q=80&fit=crop" alt="Ranch home new roof" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Roofing</div>
+            <div class="overlay-title">Ranch Home Replacement</div>
+            <div class="overlay-sub">Carol Stream, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item wide" data-cat="roofing" data-title="Two-Story Colonial Reroof" data-location="Hoffman Estates, IL" data-tag="Roofing">
+        <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900&q=80&fit=crop" alt="Colonial home new roof" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Roofing</div>
+            <div class="overlay-title">Two-Story Colonial Reroof</div>
+            <div class="overlay-sub">Hoffman Estates, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="roofing" data-title="Storm Repair &amp; Full Replacement" data-location="Roselle, IL" data-tag="Roofing">
+        <img src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=700&q=80&fit=crop" alt="Storm damage repair" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Roofing</div>
+            <div class="overlay-title">Storm Repair &amp; Full Replacement</div>
+            <div class="overlay-sub">Roselle, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="roofing" data-title="Craftsman Bungalow Reroof" data-location="Bartlett, IL" data-tag="Roofing">
+        <img src="https://images.unsplash.com/photo-1592595896551-12b371d546d5?w=700&q=80&fit=crop" alt="Craftsman home roof" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Roofing</div>
+            <div class="overlay-title">Craftsman Bungalow Reroof</div>
+            <div class="overlay-sub">Bartlett, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="roofing" data-title="Dimensional Shingles" data-location="Bloomingdale, IL" data-tag="Roofing">
+        <img src="https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?w=700&q=80&fit=crop" alt="Dimensional shingle roof" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Roofing</div>
+            <div class="overlay-title">Dimensional Shingles</div>
+            <div class="overlay-sub">Bloomingdale, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <!-- ── SIDING ── -->
+      <div class="cat-header" data-cat="siding">
+        <div class="cat-header-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
+          Siding Projects
+        </div>
+        <div class="cat-header-line"></div>
+      </div>
+
+      <div class="gallery-item wide" data-cat="siding" data-title="Full LP SmartSide Replacement" data-location="Naperville, IL" data-tag="Siding">
+        <img src="https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?w=900&q=80&fit=crop" alt="New siding installation" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Siding</div>
+            <div class="overlay-title">Full LP SmartSide Replacement</div>
+            <div class="overlay-sub">Naperville, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item tall" data-cat="siding" data-title="James Hardie Fiber Cement" data-location="Wheaton, IL" data-tag="Siding">
+        <img src="https://images.unsplash.com/photo-1503594384566-461fe158e797?w=700&q=80&fit=crop" alt="Fiber cement siding" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Siding</div>
+            <div class="overlay-title">James Hardie Fiber Cement</div>
+            <div class="overlay-sub">Wheaton, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="siding" data-title="Vinyl Siding Full Wrap" data-location="Elgin, IL" data-tag="Siding">
+        <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=700&q=80&fit=crop" alt="Vinyl siding home" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Siding</div>
+            <div class="overlay-title">Vinyl Siding Full Wrap</div>
+            <div class="overlay-sub">Elgin, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="siding" data-title="Exterior Transformation" data-location="Geneva, IL" data-tag="Siding">
+        <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=700&q=80&fit=crop" alt="Home exterior after siding" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Siding</div>
+            <div class="overlay-title">Exterior Transformation</div>
+            <div class="overlay-sub">Geneva, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item wide" data-cat="siding" data-title="Soffit, Fascia &amp; Siding Package" data-location="Downers Grove, IL" data-tag="Siding">
+        <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=900&q=80&fit=crop" alt="Complete siding package" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Siding</div>
+            <div class="overlay-title">Soffit, Fascia &amp; Siding Package</div>
+            <div class="overlay-sub">Downers Grove, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="siding" data-title="Cedar Shake Siding" data-location="Inverness, IL" data-tag="Siding">
+        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&q=80&fit=crop" alt="Cedar siding home" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Siding</div>
+            <div class="overlay-title">Cedar Shake Siding</div>
+            <div class="overlay-sub">Inverness, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="siding" data-title="Aluminum Siding Replacement" data-location="Hanover Park, IL" data-tag="Siding">
+        <img src="https://images.unsplash.com/photo-1472224371017-08207f84aaae?w=700&q=80&fit=crop" alt="New aluminum siding" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Siding</div>
+            <div class="overlay-title">Aluminum Siding Replacement</div>
+            <div class="overlay-sub">Hanover Park, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <!-- ── WINDOWS ── -->
+      <div class="cat-header" data-cat="windows">
+        <div class="cat-header-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+          Window Projects
+        </div>
+        <div class="cat-header-line"></div>
+      </div>
+
+      <div class="gallery-item wide" data-cat="windows" data-title="Full Home Window Replacement" data-location="Palatine, IL" data-tag="Windows">
+        <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=900&q=80&fit=crop" alt="Modern home new windows" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Windows</div>
+            <div class="overlay-title">Full Home Window Replacement</div>
+            <div class="overlay-sub">Palatine, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="windows" data-title="Double-Hung Vinyl Windows" data-location="Schaumburg, IL" data-tag="Windows">
+        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=700&q=80&fit=crop" alt="New vinyl windows" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Windows</div>
+            <div class="overlay-title">Double-Hung Vinyl Windows</div>
+            <div class="overlay-sub">Schaumburg, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="windows" data-title="Bay Window Installation" data-location="Barrington, IL" data-tag="Windows">
+        <img src="https://images.unsplash.com/photo-1501183638710-841dd1904471?w=700&q=80&fit=crop" alt="Bay window installation" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Windows</div>
+            <div class="overlay-title">Bay Window Installation</div>
+            <div class="overlay-sub">Barrington, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="windows" data-title="Energy-Efficient Replacement" data-location="Naperville, IL" data-tag="Windows">
+        <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=700&q=80&fit=crop" alt="Energy efficient windows" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Windows</div>
+            <div class="overlay-title">Energy-Efficient Replacement</div>
+            <div class="overlay-sub">Naperville, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item wide" data-cat="windows" data-title="Picture Windows + Casements" data-location="Arlington Heights, IL" data-tag="Windows">
+        <img src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=900&q=80&fit=crop" alt="Picture windows" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Windows</div>
+            <div class="overlay-title">Picture Windows + Casements</div>
+            <div class="overlay-sub">Arlington Heights, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <!-- ── GUTTERS ── -->
+      <div class="cat-header" data-cat="gutters">
+        <div class="cat-header-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7"/><path d="M9 22V12h6v10"/></svg>
+          Gutters &amp; Drainage
+        </div>
+        <div class="cat-header-line"></div>
+      </div>
+
+      <div class="gallery-item wide" data-cat="gutters" data-title="Seamless Aluminum Gutters" data-location="Carol Stream, IL" data-tag="Gutters">
+        <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=900&q=80&fit=crop" alt="New gutters on house" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Gutters</div>
+            <div class="overlay-title">Seamless Aluminum Gutters</div>
+            <div class="overlay-sub">Carol Stream, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="gutters" data-title="Gutter Guards + Downspouts" data-location="Bloomingdale, IL" data-tag="Gutters">
+        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=700&q=80&fit=crop" alt="Gutter guards installation" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Gutters</div>
+            <div class="overlay-title">Gutter Guards + Downspouts</div>
+            <div class="overlay-sub">Bloomingdale, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="gutters" data-title="Full Gutter Replacement" data-location="Roselle, IL" data-tag="Gutters">
+        <img src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=700&q=80&fit=crop" alt="New gutter system" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Gutters</div>
+            <div class="overlay-title">Full Gutter Replacement</div>
+            <div class="overlay-sub">Roselle, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <!-- ── STORM DAMAGE ── -->
+      <div class="cat-header" data-cat="storm">
+        <div class="cat-header-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Storm Damage &amp; Insurance
+        </div>
+        <div class="cat-header-line"></div>
+      </div>
+
+      <div class="gallery-item wide" data-cat="storm" data-title="Hail Damage — Full Restoration" data-location="Schaumburg, IL" data-tag="Storm Damage">
+        <img src="https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=900&q=80&fit=crop" alt="Storm damage roof repair" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Storm Damage</div>
+            <div class="overlay-title">Hail Damage — Full Restoration</div>
+            <div class="overlay-sub">Schaumburg, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+      <div class="gallery-item wide" data-cat="storm" data-title="Wind Damage — Roof &amp; Siding" data-location="Palatine, IL" data-tag="Storm Damage">
+        <img src="https://images.unsplash.com/photo-1560184611-ff3e53f00e8f?w=900&q=80&fit=crop" alt="Wind damage repair" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="overlay-content">
+            <div class="overlay-tag">Storm Damage</div>
+            <div class="overlay-title">Wind Damage — Roof &amp; Siding</div>
+            <div class="overlay-sub">Palatine, IL</div>
+          </div>
+          <div class="overlay-zoom"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        </div>
+      </div>
+
+    </div><!-- /gallery-grid -->
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <button class="lb-close" id="lb-close">✕</button>
+    <button class="lb-nav lb-prev" id="lb-prev">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="lb-nav lb-next" id="lb-next">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+    <div class="lightbox-img-wrap">
+      <img id="lb-img" src="" alt=""/>
+    </div>
+    <div class="lightbox-info">
+      <div>
+        <div id="lb-tag" class="lb-tag"></div>
+        <div id="lb-title" class="lb-title"></div>
+        <div id="lb-sub" class="lb-sub"></div>
+      </div>
+      <div id="lb-counter" class="lb-counter"></div>
+    </div>
+  </div>
+</div>
+
+<div id="cta-band-mount"
+  data-title="Like What You See? Let's Talk."
+  data-sub="Get a free estimate and we'll show you exactly what we can do for your home.">
+</div>
+<div id="footer-mount"></div>
+<script src="js/shared.js"></script>
+<script>
+// ── FILTER ──
+const filterBtns = document.querySelectorAll('.filter-btn');
+const items = document.querySelectorAll('.gallery-item[data-cat]');
+const catHeaders = document.querySelectorAll('.cat-header[data-cat]');
+const countEl = document.getElementById('visible-count');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+
+    let visible = 0;
+    items.forEach(item => {
+      const show = filter === 'all' || item.dataset.cat === filter;
+      item.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    catHeaders.forEach(hdr => {
+      const show = filter === 'all' || hdr.dataset.cat === filter;
+      hdr.classList.toggle('hidden', !show);
+    });
+    countEl.textContent = visible;
+  });
+});
+
+// ── LIGHTBOX ──
+let currentItems = [];
+let currentIdx = 0;
+
+function openLightbox(idx) {
+  currentItems = Array.from(document.querySelectorAll('.gallery-item[data-cat]:not(.hidden)'));
+  currentIdx = idx;
+  showLightboxItem();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function showLightboxItem() {
+  const item = currentItems[currentIdx];
+  if (!item) return;
+  document.getElementById('lb-img').src = item.querySelector('img').src;
+  document.getElementById('lb-img').alt = item.querySelector('img').alt;
+  document.getElementById('lb-tag').textContent = item.dataset.tag;
+  document.getElementById('lb-title').textContent = item.dataset.title;
+  document.getElementById('lb-sub').textContent = item.dataset.location;
+  document.getElementById('lb-counter').textContent = `${currentIdx + 1} / ${currentItems.length}`;
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+items.forEach((item, idx) => {
+  item.addEventListener('click', () => {
+    const visibleItems = Array.from(document.querySelectorAll('.gallery-item[data-cat]:not(.hidden)'));
+    openLightbox(visibleItems.indexOf(item));
+  });
+});
+
+document.getElementById('lb-close').addEventListener('click', closeLightbox);
+document.getElementById('lb-prev').addEventListener('click', () => {
+  currentIdx = (currentIdx - 1 + currentItems.length) % currentItems.length;
+  showLightboxItem();
+});
+document.getElementById('lb-next').addEventListener('click', () => {
+  currentIdx = (currentIdx + 1) % currentItems.length;
+  showLightboxItem();
+});
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeLightbox();
+});
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') { currentIdx = (currentIdx - 1 + currentItems.length) % currentItems.length; showLightboxItem(); }
+  if (e.key === 'ArrowRight') { currentIdx = (currentIdx + 1) % currentItems.length; showLightboxItem(); }
+});
+</script>
+</body>
+</html>
