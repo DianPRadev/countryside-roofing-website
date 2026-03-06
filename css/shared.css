@@ -292,3 +292,11 @@ body {
   .cta-band-in { flex-direction: column; }
   .ph-title { font-size: 32px; }
 }
+
+/* ── LOGO IMAGE ── */
+.logo-img {
+  height: 54px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
