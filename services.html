@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Services | Countryside Roofing, Siding &amp; Windows</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;1,9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/shared.css"/>
+<style>
+/* ── SERVICE NAV TABS ── */
+.svc-tabs { background: var(--white); border-bottom: 1px solid var(--g2); position: sticky; top: 72px; z-index: 100; }
+.svc-tabs-in { max-width: 1220px; margin: 0 auto; padding: 0 28px; display: flex; gap: 4px; overflow-x: auto; }
+.svc-tab {
+  padding: 14px 22px; font-size: 14px; font-weight: 500;
+  color: var(--g6); text-decoration: none; white-space: nowrap;
+  border-bottom: 3px solid transparent; transition: var(--transition);
+}
+.svc-tab:hover { color: var(--green); }
+.svc-tab.active { color: var(--green); border-bottom-color: var(--green); font-weight: 600; }
+
+/* ── SERVICE SECTION ── */
+.svc-section { padding: 88px 0; }
+.svc-section:nth-child(odd) { background: var(--off); }
+.svc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+.svc-grid.reverse { direction: rtl; }
+.svc-grid.reverse > * { direction: ltr; }
+.svc-visual {
+  border-radius: var(--rl);
+  overflow: hidden;
+  position: relative;
+  min-height: 420px;
+  display: flex; align-items: stretch;
+}
+.svc-visual-inner {
+  width: 100%;
+  background: var(--green);
+  border-radius: var(--rl);
+  padding: 48px 44px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative; overflow: hidden;
+}
+.svc-visual-inner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 70% at 100% 0%, rgba(200,168,64,.2) 0%, transparent 60%);
+}
+.svc-visual-icon {
+  width: 72px; height: 72px; background: rgba(255,255,255,.12);
+  border-radius: 18px; display: flex; align-items: center; justify-content: center;
+  margin-bottom: 24px; position: relative; z-index: 1;
+}
+.svc-visual-title {
+  font-family: 'Fraunces', serif;
+  font-size: 36px; font-weight: 700; color: var(--white);
+  line-height: 1.1; margin-bottom: 12px; position: relative; z-index: 1;
+}
+.svc-visual-title em { font-style: italic; color: var(--gold2); }
+.svc-visual-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--gold); color: var(--charcoal);
+  padding: 7px 16px; border-radius: 20px;
+  font-size: 12px; font-weight: 700; letter-spacing: .04em;
+  width: fit-content; position: relative; z-index: 1; margin-top: auto;
+}
+
+/* Stats strip inside visual */
+.svc-stats { display: flex; gap: 28px; margin-top: 28px; position: relative; z-index: 1; }
+.svc-stat { }
+.svc-stat-n {
+  font-family: 'Fraunces', serif; font-size: 32px; font-weight: 700;
+  color: var(--gold2); line-height: 1;
+}
+.svc-stat-l { font-size: 12px; color: rgba(255,255,255,.55); margin-top: 3px; }
+
+.svc-content {}
+.svc-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--green3); margin-bottom: 9px; }
+.svc-title { font-family: 'Fraunces', serif; font-size: clamp(28px, 3vw, 40px); font-weight: 700; color: var(--green); line-height: 1.15; margin-bottom: 14px; }
+.svc-desc { font-size: 16px; color: var(--g6); line-height: 1.8; margin-bottom: 28px; }
+
+/* Feature checklist */
+.svc-features { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+.svc-feat {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 14px 16px; background: var(--white);
+  border-radius: 10px; border: 1px solid var(--g2);
+  transition: var(--transition);
+}
+.svc-section:nth-child(odd) .svc-feat { background: var(--white); }
+.svc-feat:hover { border-color: var(--green); box-shadow: 0 4px 16px rgba(30,77,32,.08); }
+.svc-feat-ico {
+  width: 28px; height: 28px; background: var(--green-lt);
+  border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.svc-feat-title { font-size: 14px; font-weight: 600; color: var(--green); margin-bottom: 2px; }
+.svc-feat-text { font-size: 13px; color: var(--g6); line-height: 1.5; }
+
+/* Materials grid */
+.materials-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 32px; }
+.material-tag {
+  background: var(--green-ltr); border: 1px solid var(--green-lt);
+  color: var(--green); padding: 9px 14px; border-radius: 8px;
+  font-size: 13px; font-weight: 500; text-align: center;
+}
+
+/* Warranty chips */
+.warranty-chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.wchip {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--gold-lt); border: 1px solid rgba(200,168,64,.3);
+  color: var(--charcoal); padding: 7px 14px; border-radius: 20px;
+  font-size: 12.5px; font-weight: 600;
+}
+
+/* ── FULL WIDTH SERVICE CARDS (Storm/Insurance) ── */
+.insurance-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.ins-card {
+  background: var(--white); border-radius: var(--rl);
+  border: 1px solid var(--g2); padding: 28px;
+  transition: var(--transition);
+}
+.ins-card:hover { border-color: var(--green); box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.ins-card-ico {
+  width: 48px; height: 48px; background: var(--green);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+}
+.ins-card-title { font-size: 17px; font-weight: 700; color: var(--green); margin-bottom: 9px; }
+.ins-card-text { font-size: 14px; color: var(--g6); line-height: 1.7; }
+
+/* ── GUTTERS ── */
+.gutters-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.gutter-card {
+  background: var(--white); border-radius: var(--r);
+  border: 1px solid var(--g2); padding: 24px;
+  text-align: center; transition: var(--transition);
+}
+.gutter-card:hover { border-color: var(--green); box-shadow: var(--shadow-sm); }
+.gutter-card-ico {
+  width: 44px; height: 44px; background: var(--green-lt);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 12px;
+}
+.gutter-card-title { font-size: 14px; font-weight: 700; color: var(--green); margin-bottom: 6px; }
+.gutter-card-text { font-size: 13px; color: var(--g6); line-height: 1.6; }
+
+@media (max-width: 1024px) {
+  .svc-grid { grid-template-columns: 1fr; gap: 40px; }
+  .svc-grid.reverse { direction: ltr; }
+  .insurance-grid { grid-template-columns: 1fr 1fr; }
+  .gutters-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .svc-section { padding: 56px 0; }
+  .insurance-grid, .gutters-grid { grid-template-columns: 1fr; }
+  .materials-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body data-page="services">
+<div id="topbar-mount"></div>
+<div id="nav-mount"></div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-in">
+    <div class="ph-eyebrow"><span class="ph-dot"></span>What We Do</div>
+    <h1 class="ph-title fade-up">Complete Exterior<br/><em>Services for Your Home</em></h1>
+    <p class="ph-sub fade-up fade-up-1">From a single repair to a full exterior transformation — roofing, siding, windows, gutters, and insurance claims. We handle it all under one roof.</p>
+    <div class="ph-actions fade-up fade-up-2">
+      <a href="index.html#estimate" class="btn-primary">Get a Free Estimate</a>
+      <a href="tel:8472215600" class="btn-outline">📞 (847) 221-5600</a>
+    </div>
+  </div>
+</div>
+
+<div id="trust-bar-mount"></div>
+
+<!-- SERVICE TABS -->
+<div class="svc-tabs">
+  <div class="svc-tabs-in">
+    <a href="#roofing"  class="svc-tab active">🏠 Roofing</a>
+    <a href="#siding"   class="svc-tab">🏡 Siding</a>
+    <a href="#windows"  class="svc-tab">🪟 Windows</a>
+    <a href="#gutters"  class="svc-tab">🌧️ Gutters</a>
+    <a href="#storm"    class="svc-tab">⚡ Storm &amp; Insurance</a>
+  </div>
+</div>
+
+<!-- ── ROOFING ── -->
+<div class="svc-section" id="roofing">
+  <div class="con">
+    <div class="svc-grid">
+      <div class="svc-visual">
+        <div class="svc-visual-inner">
+          <div>
+            <div class="svc-visual-icon">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="svc-visual-title">Expert<br/><em>Roofing</em></div>
+            <p style="color:rgba(255,255,255,.6);font-size:15px;line-height:1.7;margin-top:10px">Every roof project starts with a thorough analysis — then we recommend only what your home actually needs.</p>
+          </div>
+          <div>
+            <div class="svc-stats">
+              <div class="svc-stat"><div class="svc-stat-n">50+</div><div class="svc-stat-l">Years of Experience</div></div>
+              <div class="svc-stat"><div class="svc-stat-n">600+</div><div class="svc-stat-l">Projects / Year</div></div>
+            </div>
+            <div class="svc-visual-badge" style="margin-top:20px">✓ CertainTeed Select ShingleMaster™</div>
+          </div>
+        </div>
+      </div>
+      <div class="svc-content">
+        <div class="svc-eyebrow">Roofing Services</div>
+        <h2 class="svc-title">Chicagoland's Most Trusted Roofing Contractor</h2>
+        <p class="svc-desc">Since 1973, we've been protecting Chicagoland homes from the elements. Our team performs a complete assessment of your existing roof — analyzing structural integrity, ventilation, and materials — before recommending the right solution.</p>
+        <div class="svc-features">
+          <div class="svc-feat">
+            <div class="svc-feat-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+            <div><div class="svc-feat-title">Full Roof Replacement &amp; Tear-Off</div><div class="svc-feat-text">Complete removal of existing materials and installation of a new, fully warranted roofing system.</div></div>
+          </div>
+          <div class="svc-feat">
+            <div class="svc-feat-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+            <div><div class="svc-feat-title">Roof Repair &amp; Emergency Patching</div><div class="svc-feat-text">Fast, reliable repairs for leaks, damaged shingles, flashing, and more. We also offer emergency response.</div></div>
+          </div>
+          <div class="svc-feat">
+            <div class="svc-feat-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><div class="svc-feat-title">Cedar Shake &amp; Specialty Roofing</div><div class="svc-feat-text">Expert installation of cedar shake, tile, flat/TPO roofs, and architectural shingles for unique homes.</div></div>
+          </div>
+          <div class="svc-feat">
+            <div class="svc-feat-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div><div class="svc-feat-title">Preventive Maintenance Programs</div><div class="svc-feat-text">Regular inspections and maintenance extend roof life by years, saving you thousands down the road.</div></div>
+          </div>
+        </div>
+        <div class="warranty-chips">
+          <div class="wchip">🛡️ Lifetime Material Warranty</div>
+          <div class="wchip">⚙️ 5-Year Labor Warranty</div>
+          <div class="wchip">✅ Licensed &amp; Insured</div>
+        </div>
+        <div style="margin-top:28px">
+          <a href="index.html#estimate" class="btn-green">Request Roofing Estimate →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SIDING ── -->
+<div class="svc-section" id="siding">
+  <div class="con">
+    <div class="svc-grid reverse">
+      <div class="svc-visual">
+        <div class="svc-visual-inner" style="background:var(--green2)">
+          <div>
+            <div class="svc-visual-icon">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
+            </div>
+            <div class="svc-visual-title">Premium<br/><em>Siding</em></div>
+            <p style="color:rgba(255,255,255,.6);font-size:15px;line-height:1.7;margin-top:10px">Siding that lasts decades, protects your home from Illinois weather, and dramatically boosts curb appeal.</p>
+          </div>
+          <div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;position:relative;z-index:1">
+              <span style="background:rgba(255,255,255,.12);color:white;padding:5px 12px;border-radius:20px;font-size:12px">Vinyl</span>
+              <span style="background:rgba(255,255,255,.12);color:white;padding:5px 12px;border-radius:20px;font-size:12px">Fiber Cement</span>
+              <span style="background:rgba(255,255,255,.12);color:white;padding:5px 12px;border-radius:20px;font-size:12px">Cedar</span>
+              <span style="background:rgba(255,255,255,.12);color:white;padding:5px 12px;border-radius:20px;font-size:12px">Aluminum</span>
+              <span style="background:rgba(255,255,255,.12);color:white;padding:5px 12px;border-radius:20px;font-size:12px">LP SmartSide</span>
+              <span style="background:rgba(255,255,255,.12);color:white;padding:5px 12px;border-radius:20px;font-size:12px">James Hardie</span>
+            </div>
+            <div class="svc-visual-badge" style="margin-top:20px">✓ Boosts Home Value &amp; Curb Appeal</div>
+          </div>
+        </div>
+      </div>
+      <div class="svc-content">
+        <div class="svc-eyebrow">Siding Services</div>
+        <h2 class="svc-title">Transform Your Home's Exterior with Premium Siding</h2>
+        <p class="svc-desc">We work with the best brands in the industry — LP SmartSide, James Hardie, and more — to give your home a beautiful, low-maintenance exterior that stands up to Chicagoland's toughest weather. Our siding experts help you choose the right product, color, and profile for your home.</p>
+        <div class="svc-features">
+          <div class="svc-feat">
+            <div class="svc-feat-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg></div>
+            <div><div class="svc-feat-title">Full Siding Replacement</div><div class="svc-feat-text">Complete tear-off and re-siding of your entire home with premium, weather-resistant materials.</div></div>
+          </div>
+          <div class="svc-feat">
+            <div class="svc-feat-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+            <div><div class="svc-feat-title">Siding Repair &amp; Patch Work</div><div class="svc-feat-text">Precise matching and repair of damaged sections without needing a full replacement.</div></div>
+          </div>
+          <div class="svc-feat">
+            <div class="svc-feat-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+            <div><div class="svc-feat-title">Color &amp; Style Consultation</div><div class="svc-feat-text">We help you select the perfect siding style, color, and finish to complement your neighborhood.</div></div>
+          </div>
+          <div class="svc-feat">
+            <div class="svc-feat-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+            <div><div class="svc-feat-title">Soffit, Fascia &amp; Trim</div><div class="svc-feat-text">Complete exterior package including soffit, fascia, and trim for a finished, polished look.</div></div>
+          </div>
+        </div>
+        <div class="warranty-chips">
+          <div class="wchip">🏠 Increases Resale Value</div>
+          <div class="wchip">🌧️ Weather-Resistant Materials</div>
+          <div class="wchip">🎨 Dozens of Colors</div>
+        </div>
+        <div style="margin-top:28px">
+          <a href="index.html#estimate" class="btn-green">Request Siding Estimate →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── WINDOWS ── -->
+<div class="svc-section" id="windows">
+  <div class="con">
+    <div class="svc-grid">
+      <div class="svc-visual">
+        <div class="svc-visual-inner" style="background:#1a3d1c">
+          <div>
+            <div class="svc-visual-icon">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+            </div>
+            <div class="svc-visual-title">Energy-Efficient<br/><em>Windows</em></div>
+            <p style="color:rgba(255,255,255,.6);font-size:15px;line-height:1.7;margin-top:10px">New windows can cut your heating and cooling bills significantly while making your home quieter and more comfortable.</p>
+          </div>
+          <div>
+            <div style="background:rgba(0,0,0,.25);border-radius:12px;padding:20px;margin-top:24px;position:relative;z-index:1">
+              <div style="font-size:12px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Avg. Energy Savings</div>
+              <div style="font-family:'Fraunces',serif;font-size:40px;font-weight:700;color:var(--gold2);line-height:1">15–30%</div>
+              <div style="font-size:13px;color:rgba(255,255,255,.5);margin-top:4px">on annual heating &amp; cooling costs</div>
+            </div>
+            <div class="svc-visual-badge" style="margin-top:20px">✓ Energy Star Certified Products</div>
+          </div>
+        </div>
+      </div>
+      <div class="svc-content">
+        <div class="svc-eyebrow">Window Services</div>
+        <h2 class="svc-title">Beautiful, High-Efficiency Windows That Pay for Themselves</h2>
+        <p class="svc-desc">As energy costs continue to rise, the quality and condition of your windows plays a major role in your gas and electric bills. We install premium wood and vinyl windows from leading manufacturers — products that deliver dramatic improvements in insulation, noise reduction, and aesthetics.</p>
+        <div class="svc-features">
+          <div class="svc-feat">
+            <div class="svc-feat-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2.5"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></svg></div>
+            <div><div class="svc-feat-title">Full Window Replacement</div><div class="svc-feat-text">Replace old, drafty, or damaged windows with energy-efficient, custom-fit models.</div></div>
+          </div>
+          <div class="svc-feat">
+            <div class="svc-feat-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><div class="svc-feat-title">Vinyl &amp; Wood Windows</div><div class="svc-feat-text">Low-maintenance vinyl or classic wood options — both available in dozens of styles and finishes.</div></div>
+          </div>
+          <div class="svc-feat">
+            <div class="svc-feat-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2.5"><path d="M1 6s1-1 3-1 3 2 6 2 3-1 6-1 3 1 3 1v13s-1 1-3 1-3-2-6-2-3 1-6 1-3-1-3-1z"/></svg></div>
+            <div><div class="svc-feat-title">Custom Sizes &amp; Specialty Windows</div><div class="svc-feat-text">Bay windows, casement, double-hung, picture windows — we handle any shape or configuration.</div></div>
+          </div>
+          <div class="svc-feat">
+            <div class="svc-feat-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+            <div><div class="svc-feat-title">Professional Installation</div><div class="svc-feat-text">Precise installation ensures an airtight seal — no drafts, no leaks, maximum efficiency.</div></div>
+          </div>
+        </div>
+        <div class="warranty-chips">
+          <div class="wchip">❄️ Noise-Reducing Glass</div>
+          <div class="wchip">🌡️ Double/Triple Pane</div>
+          <div class="wchip">⭐ Energy Star Rated</div>
+        </div>
+        <div style="margin-top:28px">
+          <a href="index.html#estimate" class="btn-green">Request Window Estimate →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── GUTTERS ── -->
+<div class="svc-section" id="gutters">
+  <div class="con">
+    <div class="sec-hdr">
+      <div class="eyebrow">Gutters &amp; Drainage</div>
+      <h2 class="section-title">Protect Your Home's Foundation with Quality Gutters</h2>
+      <p class="section-sub">Clogged, cracked, or improperly installed gutters can lead to serious issues — mold, basement flooding, and foundation damage. We install and maintain premium gutter systems that channel water safely away from your home.</p>
+    </div>
+    <div class="gutters-grid">
+      <div class="gutter-card">
+        <div class="gutter-card-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+        <div class="gutter-card-title">Gutter Installation</div>
+        <div class="gutter-card-text">Seamless aluminum gutters custom-cut to your home's exact dimensions — no joints means no leaks.</div>
+      </div>
+      <div class="gutter-card">
+        <div class="gutter-card-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+        <div class="gutter-card-title">Gutter Repair</div>
+        <div class="gutter-card-text">Fix sagging, leaking, or detached gutters fast. We re-pitch, re-seal, and replace damaged sections.</div>
+      </div>
+      <div class="gutter-card">
+        <div class="gutter-card-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg></div>
+        <div class="gutter-card-title">Gutter Guards</div>
+        <div class="gutter-card-text">Premium leaf and debris guards that keep gutters flowing freely — no more climbing ladders to clean them out.</div>
+      </div>
+      <div class="gutter-card">
+        <div class="gutter-card-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/></svg></div>
+        <div class="gutter-card-title">Downspout Routing</div>
+        <div class="gutter-card-text">Strategic downspout placement and underground extensions to move water far from your foundation.</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <a href="index.html#estimate" class="btn-green">Get Gutter Estimate →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── STORM & INSURANCE ── -->
+<div class="svc-section" id="storm" style="background:var(--green)">
+  <div class="con">
+    <div class="sec-hdr-c">
+      <div class="eyebrow light">Storm Damage &amp; Insurance</div>
+      <h2 class="section-title light">Hail. Wind. Damage. <em style="font-style:italic;color:var(--gold2)">We've Got You Covered.</em></h2>
+      <p class="section-sub light" style="max-width:600px">Storm damage is stressful. Dealing with your insurance company shouldn't make it worse. Our team has years of experience navigating insurance claims — we document the damage, work directly with your adjuster, and fight to maximize your payout.</p>
+    </div>
+    <div class="insurance-grid">
+      <div class="ins-card">
+        <div class="ins-card-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div class="ins-card-title">Free Damage Assessment</div>
+        <div class="ins-card-text">We inspect your roof and exterior thoroughly and provide detailed documentation of all storm-related damage — at no charge.</div>
+      </div>
+      <div class="ins-card">
+        <div class="ins-card-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <div class="ins-card-title">Insurance Claim Assistance</div>
+        <div class="ins-card-text">We work directly with your insurance adjuster, providing all necessary documentation and estimates to support your claim.</div>
+      </div>
+      <div class="ins-card">
+        <div class="ins-card-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="ins-card-title">Full Restoration</div>
+        <div class="ins-card-text">Once approved, our crews restore your roof, siding, and windows to better-than-before condition, fast.</div>
+      </div>
+    </div>
+    <div style="background:rgba(255,255,255,.08);border-radius:var(--rl);padding:32px;margin-top:40px;border:1px solid rgba(255,255,255,.15);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px">
+      <div>
+        <div style="font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:white;margin-bottom:6px">Recent storm damage? Call us first.</div>
+        <div style="font-size:15px;color:rgba(255,255,255,.65)">We offer emergency assessments and can often respond within 24 hours.</div>
+      </div>
+      <a href="tel:8472215600" class="btn-primary">📞 (847) 221-5600</a>
+    </div>
+  </div>
+</div>
+
+<div id="cta-band-mount"
+  data-title="Every Project. Every Material. Warranted."
+  data-sub="Get your free, no-pressure estimate today. We'll assess your home and recommend only what it truly needs.">
+</div>
+<div id="footer-mount"></div>
+<script src="js/shared.js"></script>
+<script>
+  // Highlight active tab on scroll
+  const tabs = document.querySelectorAll('.svc-tab');
+  const sections = ['roofing','siding','windows','gutters','storm'].map(id => document.getElementById(id));
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY + 160;
+    sections.forEach((s, i) => {
+      if (s && y >= s.offsetTop) {
+        tabs.forEach(t => t.classList.remove('active'));
+        tabs[i]?.classList.add('active');
+      }
+    });
+  });
+</script>
+</body>
+</html>

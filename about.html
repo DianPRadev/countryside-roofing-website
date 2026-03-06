@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>About Us | Countryside Roofing, Siding &amp; Windows</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;1,9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/shared.css"/>
+<style>
+/* ── STORY SECTION ── */
+.story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+.story-visual {
+  position: relative; border-radius: var(--rl); overflow: hidden;
+}
+.story-box {
+  background: var(--green); border-radius: var(--rl); padding: 48px 44px;
+  position: relative; overflow: hidden; min-height: 480px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.story-box::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 100% 0%, rgba(200,168,64,.18) 0%, transparent 55%);
+}
+.story-year {
+  font-family: 'Fraunces', serif;
+  font-size: 100px; font-weight: 800;
+  color: rgba(255,255,255,.08); line-height: 1;
+  position: absolute; bottom: 24px; right: 24px;
+  pointer-events: none;
+}
+.story-quote {
+  font-family: 'Fraunces', serif; font-style: italic;
+  font-size: 22px; color: var(--white); line-height: 1.5;
+  margin-bottom: 20px; position: relative; z-index: 1;
+}
+.story-quote-author { font-size: 14px; color: rgba(255,255,255,.55); position: relative; z-index: 1; }
+.story-milestones { display: flex; flex-direction: column; gap: 0; position: relative; z-index: 1; }
+.milestone { display: flex; gap: 16px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+.milestone:last-child { border-bottom: none; }
+.milestone-year {
+  font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700;
+  color: var(--gold2); min-width: 52px;
+}
+.milestone-text { font-size: 14px; color: rgba(255,255,255,.65); line-height: 1.5; }
+
+/* ── VALUES ── */
+.values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.value-card {
+  background: var(--white); border-radius: var(--rl);
+  border: 1px solid var(--g2); padding: 32px;
+  transition: var(--transition); position: relative; overflow: hidden;
+}
+.value-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--green); transform: scaleX(0);
+  transition: transform .3s; transform-origin: left;
+}
+.value-card:hover::after { transform: scaleX(1); }
+.value-card:hover { box-shadow: var(--shadow-md); }
+.value-num {
+  font-family: 'Fraunces', serif; font-size: 48px; font-weight: 800;
+  color: var(--green-lt); line-height: 1; margin-bottom: 14px;
+}
+.value-title { font-size: 18px; font-weight: 700; color: var(--green); margin-bottom: 9px; }
+.value-text { font-size: 14px; color: var(--g6); line-height: 1.7; }
+
+/* ── TEAM ── */
+.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.team-card {
+  background: var(--white); border-radius: var(--rl);
+  border: 1px solid var(--g2); padding: 28px 24px;
+  text-align: center; transition: var(--transition);
+}
+.team-card:hover { border-color: var(--green); box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.team-avatar {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--green); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700;
+  margin: 0 auto 16px;
+}
+.team-name { font-size: 17px; font-weight: 700; color: var(--green); margin-bottom: 4px; }
+.team-role { font-size: 13px; color: var(--g4); margin-bottom: 12px; }
+.team-bio { font-size: 13px; color: var(--g6); line-height: 1.65; }
+
+/* ── STATS BAR ── */
+.stats-bar { background: var(--green); padding: 56px 0; }
+.stats-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; }
+.stat-item { text-align: center; padding: 0 24px; border-right: 1px solid rgba(255,255,255,.1); }
+.stat-item:last-child { border-right: none; }
+.stat-big {
+  font-family: 'Fraunces', serif; font-size: 48px; font-weight: 800;
+  color: var(--gold2); line-height: 1; margin-bottom: 8px;
+}
+.stat-label { font-size: 14px; color: rgba(255,255,255,.6); }
+
+/* ── REVIEWS ── */
+.reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.review-card {
+  background: var(--white); border-radius: var(--rl);
+  border: 1px solid var(--g2); padding: 28px;
+  transition: var(--transition); display: flex; flex-direction: column;
+}
+.review-card:hover { border-color: var(--green); box-shadow: var(--shadow-md); }
+.review-stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; margin-bottom: 14px; }
+.review-text { font-size: 14px; color: var(--g6); line-height: 1.75; font-style: italic; flex: 1; margin-bottom: 20px; }
+.review-author { display: flex; align-items: center; gap: 11px; }
+.review-av {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--green); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 13px; flex-shrink: 0;
+}
+.review-name { font-weight: 700; font-size: 14px; color: var(--green); }
+.review-loc { font-size: 12px; color: var(--g4); }
+
+/* ── CERTIFICATIONS ── */
+.certs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.cert-card {
+  background: var(--white); border: 1px solid var(--g2);
+  border-radius: var(--r); padding: 22px 18px; text-align: center;
+  transition: var(--transition);
+}
+.cert-card:hover { border-color: var(--green); box-shadow: var(--shadow-sm); }
+.cert-ico {
+  width: 48px; height: 48px; background: var(--green-lt);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 12px;
+}
+.cert-title { font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 4px; }
+.cert-text { font-size: 12px; color: var(--g4); line-height: 1.5; }
+
+@media (max-width: 1024px) {
+  .story-grid, .values-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr 1fr; }
+  .stats-row { grid-template-columns: repeat(3, 1fr); }
+  .reviews-grid { grid-template-columns: 1fr 1fr; }
+  .certs-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .team-grid, .reviews-grid, .certs-grid { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.1); padding: 16px 0; }
+}
+</style>
+</head>
+<body data-page="about">
+<div id="topbar-mount"></div>
+<div id="nav-mount"></div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-in">
+    <div class="ph-eyebrow"><span class="ph-dot"></span>Our Story</div>
+    <h1 class="ph-title fade-up">Family-Owned.<br/><em>Community-Trusted.</em></h1>
+    <p class="ph-sub fade-up fade-up-1">Since 1973, Countryside Roofing has been more than a contractor — we've been a neighbor. Three generations of Chicagoland homeowners have trusted us to protect what matters most.</p>
+    <div class="ph-actions fade-up fade-up-2">
+      <a href="index.html#estimate" class="btn-primary">Get a Free Estimate</a>
+      <a href="tel:8472215600" class="btn-outline">📞 (847) 221-5600</a>
+    </div>
+  </div>
+</div>
+
+<div id="trust-bar-mount"></div>
+
+<!-- ── STATS BAR ── -->
+<div class="stats-bar">
+  <div class="con">
+    <div class="stats-row">
+      <div class="stat-item"><div class="stat-big">1973</div><div class="stat-label">Year Founded</div></div>
+      <div class="stat-item"><div class="stat-big">50+</div><div class="stat-label">Years in Business</div></div>
+      <div class="stat-item"><div class="stat-big">600+</div><div class="stat-label">Projects Completed / Year</div></div>
+      <div class="stat-item"><div class="stat-big">65%</div><div class="stat-label">Customers from Referrals</div></div>
+      <div class="stat-item"><div class="stat-big">4.8★</div><div class="stat-label">619 Google Reviews</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── OUR STORY ── -->
+<div class="section">
+  <div class="con">
+    <div class="story-grid">
+      <div class="story-visual">
+        <div class="story-box">
+          <div>
+            <p class="story-quote">"Quality is our tradition. It always has been, and it always will be."</p>
+            <p class="story-quote-author">— Edward McKendree, President</p>
+          </div>
+          <div class="story-milestones">
+            <div class="milestone">
+              <div class="milestone-year">1973</div>
+              <div class="milestone-text">Founded in Streamwood, IL as a local family roofing business serving the Chicago suburbs.</div>
+            </div>
+            <div class="milestone">
+              <div class="milestone-year">1998</div>
+              <div class="milestone-text">Expanded services to include siding and windows, becoming a full exterior contractor.</div>
+            </div>
+            <div class="milestone">
+              <div class="milestone-year">2006</div>
+              <div class="milestone-text">Earned BBB A+ accreditation — a status we've maintained without interruption ever since.</div>
+            </div>
+            <div class="milestone">
+              <div class="milestone-year">2010</div>
+              <div class="milestone-text">Awarded CertainTeed Select ShingleMaster™ designation — top 1% of roofing contractors nationally.</div>
+            </div>
+            <div class="milestone">
+              <div class="milestone-year">Today</div>
+              <div class="milestone-text">Still family-run, still in Streamwood, still doing things the right way for over 600 families a year.</div>
+            </div>
+          </div>
+          <div class="story-year">1973</div>
+        </div>
+      </div>
+      <div>
+        <div class="eyebrow">Who We Are</div>
+        <h2 class="section-title">More Than 50 Years of Protecting Chicagoland Homes</h2>
+        <p style="font-size:16px;color:var(--g6);line-height:1.8;margin-bottom:20px">Countryside Roofing, Siding and Windows was founded in 1973 with a simple belief: do excellent work, treat customers honestly, and the business will take care of itself. Five decades later, that philosophy still guides everything we do.</p>
+        <p style="font-size:16px;color:var(--g6);line-height:1.8;margin-bottom:20px">We are a true family-owned and operated company. When you call Countryside, you're not reaching a call center — you're talking to people who live and work in the same communities you do. Our team of field representatives, project managers, and installation crews have decades of combined experience and take genuine pride in every project they touch.</p>
+        <p style="font-size:16px;color:var(--g6);line-height:1.8;margin-bottom:32px">Our reputation speaks for itself: over 65% of our new customers come to us through referrals from happy neighbors, friends, and family members. That's not a marketing metric — it's the result of doing honest, high-quality work year after year.</p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <a href="process.html" class="btn-green">See How We Work →</a>
+          <a href="index.html#estimate" class="btn-green" style="background:var(--off);color:var(--green);border:1px solid var(--g2)">Get a Free Estimate</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── OUR VALUES ── -->
+<div class="section bg-off">
+  <div class="con">
+    <div class="sec-hdr-c">
+      <div class="eyebrow">How We Operate</div>
+      <h2 class="section-title">The Principles Behind Every Project</h2>
+      <p class="section-sub">We don't just install roofs and siding. We build relationships — and these are the values that guide every interaction.</p>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-num">01</div>
+        <div class="value-title">Honest Consultation</div>
+        <div class="value-text">We will always recommend what your home actually needs — even if that means suggesting a repair instead of a full replacement. Your long-term best interest comes before a bigger sale.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-num">02</div>
+        <div class="value-title">Uncompromising Quality</div>
+        <div class="value-text">We only use materials from trusted, reputable manufacturers, and our installation standards exceed industry norms. A job not done right is a job not done.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-num">03</div>
+        <div class="value-title">Clear Communication</div>
+        <div class="value-text">From the initial estimate to the final walk-through, you'll always know what's happening, when it's happening, and why. No surprises. No runaround.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-num">04</div>
+        <div class="value-title">Respect for Your Property</div>
+        <div class="value-text">Our crews treat your home like it's their own — using magnetic rollers to collect nails, daily clean-up, and careful protection of landscaping and driveways.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-num">05</div>
+        <div class="value-title">We Stand Behind Our Work</div>
+        <div class="value-text">Every project is backed by a lifetime manufacturer material warranty and our own 5-year labor warranty. If something isn't right, we make it right.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-num">06</div>
+        <div class="value-title">Community First</div>
+        <div class="value-text">We've served the same Chicagoland communities for over 50 years. Our neighbors' trust is the foundation everything else is built on — and we never take it for granted.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TEAM ── -->
+<div class="section">
+  <div class="con">
+    <div class="sec-hdr-c">
+      <div class="eyebrow">The People Behind the Projects</div>
+      <h2 class="section-title">Meet Our Team</h2>
+      <p class="section-sub">Every Countryside representative brings years of experience and genuine passion for doing great work.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">EM</div>
+        <div class="team-name">Edward McKendree</div>
+        <div class="team-role">President &amp; Founder</div>
+        <div class="team-bio">With over 50 years in the industry, Ed founded Countryside on a simple premise: honest work, quality materials, and treating every customer like a neighbor.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">KM</div>
+        <div class="team-name">Ken McKendree</div>
+        <div class="team-role">Senior Project Manager</div>
+        <div class="team-bio">Ken has managed hundreds of major projects across Chicagoland and is known for his meticulous attention to detail and commitment to on-time delivery.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">CP</div>
+        <div class="team-name">Chad Pfeifer</div>
+        <div class="team-role">Office Manager</div>
+        <div class="team-bio">Chad coordinates everything behind the scenes — scheduling, estimates, and customer communication — ensuring every project runs smoothly from day one.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">GC</div>
+        <div class="team-name">George C.</div>
+        <div class="team-role">Senior Field Representative</div>
+        <div class="team-bio">George is our customers' go-to guide through the entire process — from initial inspection and material selection to final walkthrough and follow-up.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CERTIFICATIONS ── -->
+<div class="section bg-g1">
+  <div class="con">
+    <div class="sec-hdr-c">
+      <div class="eyebrow">Credentials &amp; Certifications</div>
+      <h2 class="section-title">Trusted, Accredited &amp; Recognized</h2>
+      <p class="section-sub">Our certifications reflect our commitment to excellence and the trust our industry places in our work.</p>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <div class="cert-title">BBB A+ Accredited</div>
+        <div class="cert-text">Accredited since 2006 with an unbroken A+ rating from the Better Business Bureau</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div class="cert-title">CertainTeed Select ShingleMaster™</div>
+        <div class="cert-text">Top 1% of roofing contractors nationwide — certified for excellence in installation and customer service</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="cert-title">Licensed &amp; Insured — IL &amp; WI</div>
+        <div class="cert-text">Fully licensed, bonded, and insured in both Illinois and Wisconsin for all residential and commercial work</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+        <div class="cert-title">EBSCO Home Reports Best Pick</div>
+        <div class="cert-text">Recognized by EBSCO Research as a "Best Picks" contractor for consistent quality and service</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── REVIEWS ── -->
+<div class="section" id="reviews">
+  <div class="con">
+    <div class="sec-hdr-c">
+      <div class="eyebrow">Customer Reviews</div>
+      <h2 class="section-title">What Chicagoland Homeowners Say</h2>
+      <p class="section-sub">4.8 stars across 619 Google reviews. Here are a few from the families we've served.</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"George was thorough, knowledgeable, and highly professional. He spent real time educating me on roofing materials and proper venting. When the crew arrived, everything unfolded exactly as described — smoothly and like clockwork."</div>
+        <div class="review-author"><div class="review-av">JR</div><div><div class="review-name">J. Ramirez</div><div class="review-loc">Barrington, IL · Google Review</div></div></div>
+      </div>
+      <div class="review-card" style="background:var(--green);border-color:var(--green)">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text" style="color:rgba(255,255,255,.78)">"We hired Countryside 20 years ago and just hired them again. Ken kept us informed every step of the way, handled the insurance approval, and the crew exceeded our expectations. Many of our neighbors have hired them too!"</div>
+        <div class="review-author">
+          <div class="review-av" style="background:rgba(255,255,255,.15)">SK</div>
+          <div><div class="review-name" style="color:white">S. Kowalski</div><div class="review-loc" style="color:rgba(255,255,255,.4)">Schaumburg, IL · Google Review</div></div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Staff was friendly and courteous, job completed exactly as promised. They removed and replaced all rotted wood before installing the new roof — which looks absolutely beautiful. They were meticulous in cleanup. Highly recommend."</div>
+        <div class="review-author"><div class="review-av">MP</div><div><div class="review-name">M. Peterson</div><div class="review-loc">Streamwood, IL · Google Review</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Mike was very professional. He inspected my roof and attic, then prepared a very detailed estimate. The work was done well and quickly. Would absolutely hire them again without hesitation."</div>
+        <div class="review-author"><div class="review-av">TH</div><div><div class="review-name">T. Henderson</div><div class="review-loc">Palatine, IL · Google Review</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Today, Countryside completed a full tear off and replace project for us. An army of the hardest working people I've seen in a long time attacked the roof and got it done to perfection. It looks amazing and the quality is outstanding."</div>
+        <div class="review-author"><div class="review-av">DB</div><div><div class="review-name">D. Barnes</div><div class="review-loc">Carol Stream, IL · Google Review</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"After interviewing 3 roofing companies, we selected Countryside. Mike had the most clear and concise response and answered all questions correctly. On install day, Ken the owner was on site to make sure everything was perfect."</div>
+        <div class="review-author"><div class="review-av">LW</div><div><div class="review-name">L. Wilson</div><div class="review-loc">Hoffman Estates, IL · Google Review</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="cta-band-mount"
+  data-title="50 Years of Quality. One Free Estimate."
+  data-sub="See why 65% of our new customers come from referrals. No pressure, no obligation.">
+</div>
+<div id="footer-mount"></div>
+<script src="js/shared.js"></script>
+</body>
+</html>

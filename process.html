@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Our Process | Countryside Roofing, Siding &amp; Windows</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;1,9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/shared.css"/>
+<style>
+/* ── PROCESS TIMELINE ── */
+.timeline { position: relative; padding: 20px 0; }
+.timeline::before {
+  content: '';
+  position: absolute; left: 50%; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--green), var(--gold), var(--green));
+  transform: translateX(-50%);
+}
+.tl-step {
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  gap: 0;
+  margin-bottom: 64px;
+  align-items: start;
+}
+.tl-step:last-child { margin-bottom: 0; }
+.tl-content-left { padding-right: 48px; text-align: right; }
+.tl-content-right { padding-left: 48px; text-align: left; }
+.tl-empty { }
+.tl-center {
+  display: flex; flex-direction: column; align-items: center;
+  position: relative; z-index: 2;
+}
+.tl-num {
+  width: 64px; height: 64px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700;
+  color: var(--white); flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,.15);
+}
+.tl-connector {
+  width: 2px; height: 20px;
+  background: linear-gradient(var(--green), transparent);
+  margin-top: 8px;
+}
+
+/* Step colors */
+.step-1 .tl-num { background: var(--green); }
+.step-2 .tl-num { background: var(--green2); }
+.step-3 .tl-num { background: var(--green3); }
+.step-4 .tl-num { background: var(--gold); color: var(--charcoal); }
+.step-5 .tl-num { background: var(--green); }
+.step-6 .tl-num { background: var(--green2); }
+
+.tl-step-title {
+  font-family: 'Fraunces', serif;
+  font-size: 22px; font-weight: 700; color: var(--green); margin-bottom: 10px;
+}
+.tl-step-text {
+  font-size: 15px; color: var(--g6); line-height: 1.75;
+}
+.tl-step-chips {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px;
+}
+.tl-step .tl-content-right .tl-step-chips { justify-content: flex-start; }
+.tl-step .tl-content-left .tl-step-chips { justify-content: flex-end; }
+.tl-chip {
+  background: var(--green-lt); color: var(--green);
+  padding: 5px 12px; border-radius: 20px;
+  font-size: 12px; font-weight: 600;
+}
+
+/* ── EXPECTATIONS SECTION ── */
+.expect-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.expect-card {
+  background: var(--white); border-radius: var(--rl);
+  border: 1px solid var(--g2); padding: 28px;
+  display: flex; gap: 18px; align-items: flex-start;
+  transition: var(--transition);
+}
+.expect-card:hover { border-color: var(--green); box-shadow: var(--shadow-md); }
+.expect-ico {
+  width: 44px; height: 44px; background: var(--green-lt);
+  border-radius: 11px; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.expect-title { font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 6px; }
+.expect-text { font-size: 14px; color: var(--g6); line-height: 1.65; }
+
+/* ── FAQ ── */
+.faq-list { max-width: 760px; margin: 0 auto; }
+.faq-item {
+  border-bottom: 1px solid var(--g2);
+}
+.faq-q {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 0; cursor: pointer; gap: 16px;
+}
+.faq-q-text { font-size: 16px; font-weight: 600; color: var(--green); }
+.faq-icon {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--green-lt); color: var(--green);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 18px; font-weight: 300;
+  transition: transform .3s;
+}
+.faq-a {
+  font-size: 15px; color: var(--g6); line-height: 1.75;
+  padding-bottom: 20px; display: none;
+}
+.faq-item.open .faq-a { display: block; }
+.faq-item.open .faq-icon { transform: rotate(45deg); background: var(--green); color: white; }
+
+/* ── PREPARATION CHECKLIST ── */
+.prep-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.prep-card {
+  background: var(--white); border-radius: var(--rl);
+  border: 1px solid var(--g2); padding: 26px;
+  transition: var(--transition);
+}
+.prep-card:hover { border-color: var(--green); }
+.prep-card-title { font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 14px; display: flex; align-items: center; gap: 9px; }
+.prep-card-ico { width: 28px; height: 28px; background: var(--green-lt); border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.prep-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.prep-list li { font-size: 13px; color: var(--g6); display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
+.prep-list li::before { content: '✓'; color: var(--green2); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+@media (max-width: 1024px) {
+  .timeline::before { left: 32px; }
+  .tl-step { grid-template-columns: 64px 1fr; }
+  .tl-center { align-items: flex-start; }
+  .tl-connector { display: none; }
+  .tl-content-left { display: none; }
+  .tl-content-right { padding-left: 28px; text-align: left; }
+  .tl-step .tl-content-right .tl-step-chips { justify-content: flex-start; }
+  .tl-step:nth-child(even) .tl-content-left { display: none; }
+  .expect-grid { grid-template-columns: 1fr; }
+  .prep-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .prep-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body data-page="process">
+<div id="topbar-mount"></div>
+<div id="nav-mount"></div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-in">
+    <div class="ph-eyebrow"><span class="ph-dot"></span>How It Works</div>
+    <h1 class="ph-title fade-up">Simple. Transparent.<br/><em>Done Right.</em></h1>
+    <p class="ph-sub fade-up fade-up-1">From your first call to the final walk-through, you'll always know exactly what's happening and why. No surprises, no runaround — just clear communication and excellent work.</p>
+    <div class="ph-actions fade-up fade-up-2">
+      <a href="index.html#estimate" class="btn-primary">Start Your Project</a>
+      <a href="tel:8472215600" class="btn-outline">📞 (847) 221-5600</a>
+    </div>
+  </div>
+</div>
+
+<div id="trust-bar-mount"></div>
+
+<!-- ── PROCESS TIMELINE ── -->
+<div class="section">
+  <div class="con">
+    <div class="sec-hdr-c">
+      <div class="eyebrow">The Countryside Process</div>
+      <h2 class="section-title">Six Steps to a Better Home</h2>
+      <p class="section-sub">We've refined this process over 50 years to make your experience as smooth and stress-free as possible.</p>
+    </div>
+    <div class="timeline">
+
+      <!-- STEP 1 -->
+      <div class="tl-step step-1">
+        <div class="tl-empty"></div>
+        <div class="tl-center">
+          <div class="tl-num">1</div>
+        </div>
+        <div class="tl-content-right">
+          <div class="tl-step-title">Free Consultation &amp; Contact</div>
+          <div class="tl-step-text">Call us at (847) 221-5600 or fill out our online estimate form. A team member will follow up within 24 hours to learn about your project, answer initial questions, and schedule an on-site visit at a time that works for you.</div>
+          <div class="tl-step-chips">
+            <span class="tl-chip">No obligation</span>
+            <span class="tl-chip">24-hr response</span>
+            <span class="tl-chip">Zero pressure</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="tl-step step-2">
+        <div class="tl-content-left">
+          <div class="tl-step-title">On-Site Assessment</div>
+          <div class="tl-step-text">Your dedicated Countryside representative visits your home to perform a thorough inspection. We evaluate structural integrity, ventilation, current materials, and any damage. We document everything with photos and measurements — and we explain exactly what we find.</div>
+          <div class="tl-step-chips" style="justify-content:flex-end">
+            <span class="tl-chip">Photo documentation</span>
+            <span class="tl-chip">Full transparency</span>
+          </div>
+        </div>
+        <div class="tl-center">
+          <div class="tl-num">2</div>
+        </div>
+        <div class="tl-empty"></div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="tl-step step-3">
+        <div class="tl-empty"></div>
+        <div class="tl-center">
+          <div class="tl-num">3</div>
+        </div>
+        <div class="tl-content-right">
+          <div class="tl-step-title">Detailed, Itemized Proposal</div>
+          <div class="tl-step-text">We prepare a comprehensive, written proposal outlining all recommended work, materials, labor costs, and timeline. Every line item is explained. No hidden fees, no vague estimates — just a clear, honest picture of exactly what will be done and what it will cost.</div>
+          <div class="tl-step-chips">
+            <span class="tl-chip">Itemized line-by-line</span>
+            <span class="tl-chip">No hidden costs</span>
+            <span class="tl-chip">Materials specified</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="tl-step step-4">
+        <div class="tl-content-left">
+          <div class="tl-step-title">Insurance &amp; Financing (If Applicable)</div>
+          <div class="tl-step-text">If your project involves an insurance claim, we work directly with your adjuster — providing all necessary documentation, damage reports, and estimates. We navigate the claims process with you so you don't have to figure it out alone. Financing options are also available.</div>
+          <div class="tl-step-chips" style="justify-content:flex-end">
+            <span class="tl-chip">Insurance advocacy</span>
+            <span class="tl-chip">Financing available</span>
+          </div>
+        </div>
+        <div class="tl-center">
+          <div class="tl-num">4</div>
+        </div>
+        <div class="tl-empty"></div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="tl-step step-5">
+        <div class="tl-empty"></div>
+        <div class="tl-center">
+          <div class="tl-num">5</div>
+        </div>
+        <div class="tl-content-right">
+          <div class="tl-step-title">Expert Installation</div>
+          <div class="tl-step-text">Our own experienced crews — not subcontractors — perform all installation work. Your rep is on-site and reachable throughout the project. We arrive when we say we will, communicate any issues immediately, and treat your home with the same care we'd want for our own.</div>
+          <div class="tl-step-chips">
+            <span class="tl-chip">Our own crews</span>
+            <span class="tl-chip">Daily communication</span>
+            <span class="tl-chip">On-time arrival</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 6 -->
+      <div class="tl-step step-6">
+        <div class="tl-content-left">
+          <div class="tl-step-title">Clean-Up &amp; Final Walk-Through</div>
+          <div class="tl-step-text">When the work is done, our crew performs a thorough clean-up — including a magnetic roller pass to collect any nails or metal debris from your lawn and driveway. Then your rep walks the entire project with you to confirm you're 100% satisfied before we consider the job complete.</div>
+          <div class="tl-step-chips" style="justify-content:flex-end">
+            <span class="tl-chip">Magnetic nail pickup</span>
+            <span class="tl-chip">Full perimeter walk</span>
+            <span class="tl-chip">Satisfaction guaranteed</span>
+          </div>
+        </div>
+        <div class="tl-center">
+          <div class="tl-num">6</div>
+        </div>
+        <div class="tl-empty"></div>
+      </div>
+
+    </div><!-- /timeline -->
+  </div>
+</div>
+
+<!-- ── WHAT TO EXPECT ── -->
+<div class="section bg-off">
+  <div class="con">
+    <div class="sec-hdr-c">
+      <div class="eyebrow">On Installation Day</div>
+      <h2 class="section-title">What to Expect When Our Crew Arrives</h2>
+      <p class="section-sub">Here's what a typical installation day looks like so you know exactly what to expect.</p>
+    </div>
+    <div class="expect-grid">
+      <div class="expect-card">
+        <div class="expect-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div><div class="expect-title">On-Time Arrival</div><div class="expect-text">Your crew will arrive at the scheduled time. Your rep will also be on-site or reachable by phone throughout the day.</div></div>
+      </div>
+      <div class="expect-card">
+        <div class="expect-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div><div class="expect-title">Property Protection</div><div class="expect-text">We protect landscaping, vehicles, and any exterior features before work begins. Tarps and drop cloths are used throughout.</div></div>
+      </div>
+      <div class="expect-card">
+        <div class="expect-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100 8 4 4 0 000-8z"/></svg></div>
+        <div><div class="expect-title">Real-Time Updates</div><div class="expect-text">If our crew discovers anything unexpected — like rotted decking — we notify you immediately before proceeding. No surprise charges.</div></div>
+      </div>
+      <div class="expect-card">
+        <div class="expect-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+        <div><div class="expect-title">Efficient Work</div><div class="expect-text">Most residential roof replacements are completed in a single day. Siding and window projects are planned to minimize disruption to your household.</div></div>
+      </div>
+      <div class="expect-card">
+        <div class="expect-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+        <div><div class="expect-title">Thorough Clean-Up</div><div class="expect-text">At the end of every day, our crews clean up completely. A magnetic roller is used to collect nails from your lawn, driveway, and garden beds.</div></div>
+      </div>
+      <div class="expect-card">
+        <div class="expect-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div><div class="expect-title">Final Walk-Through</div><div class="expect-text">Before we leave, your rep walks the entire project with you — checking every detail — and won't sign off until you're completely satisfied.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PREP CHECKLIST ── -->
+<div class="section bg-green">
+  <div class="con">
+    <div class="sec-hdr-c">
+      <div class="eyebrow light">Before We Arrive</div>
+      <h2 class="section-title light">How to Prepare for Your Project Day</h2>
+      <p class="section-sub light">A little preparation makes the day go even smoother. Here's what we recommend.</p>
+    </div>
+    <div class="prep-grid">
+      <div class="prep-card">
+        <div class="prep-card-title">
+          <div class="prep-card-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+          Roofing Projects
+        </div>
+        <ul class="prep-list">
+          <li>Clear vehicles from the driveway</li>
+          <li>Move patio furniture away from the house</li>
+          <li>Remove wall hangings or fragile items from interior walls</li>
+          <li>Give us access to your backyard gate if needed</li>
+          <li>Let neighbors know in advance about noise</li>
+        </ul>
+      </div>
+      <div class="prep-card">
+        <div class="prep-card-title">
+          <div class="prep-card-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg></div>
+          Siding Projects
+        </div>
+        <ul class="prep-list">
+          <li>Clear a 4-foot perimeter around your home</li>
+          <li>Remove outdoor decorations and light fixtures</li>
+          <li>Trim any overgrown shrubs near the walls</li>
+          <li>Ensure exterior outlets are accessible</li>
+          <li>Secure any outdoor pets away from work areas</li>
+        </ul>
+      </div>
+      <div class="prep-card">
+        <div class="prep-card-title">
+          <div class="prep-card-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></svg></div>
+          Window Projects
+        </div>
+        <ul class="prep-list">
+          <li>Remove window treatments and blinds</li>
+          <li>Clear furniture 3 feet away from each window</li>
+          <li>Remove any window A/C units in advance</li>
+          <li>Clear exterior window sills and flower boxes</li>
+          <li>Ensure all windows to be replaced are accessible</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FAQ ── -->
+<div class="section">
+  <div class="con">
+    <div class="sec-hdr-c">
+      <div class="eyebrow">Common Questions</div>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-sub">Answers to the questions we hear most often.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">How long does a roof replacement take?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">Most residential roof replacements are completed in a single day. Larger or more complex roofs may take two days. We provide a specific timeline in your project proposal before any work begins.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Do I need to be home during the installation?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">You don't need to be home for the duration of the project, but we recommend being available at the start of the day when the crew arrives, and at the end for the final walk-through. Your rep will be in contact throughout the day.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What happens if you find unexpected damage during the project?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">If we discover rotted wood, damaged decking, or other issues during tear-off, we stop and contact you before proceeding. We explain what we found, what it means, and the cost to address it. You approve any changes before work continues.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Do you use subcontractors?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">No. All installation work is performed by our own trained, experienced crews — not subcontractors. This is one of the reasons we can stand behind our 5-year labor warranty with confidence.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Can you help me with my insurance claim?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">Absolutely. We have extensive experience working with insurance adjusters and can assist throughout the entire claims process — from initial documentation to final approval. Many of our customers have found we're able to help them receive more comprehensive coverage than they expected.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">What warranties do you offer?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">Every project includes two layers of warranty protection: a lifetime manufacturer material warranty on all products we install, and our own 5-year labor warranty covering the quality of our installation work. Details are outlined in every project contract.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Do you offer financing?</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">Yes, financing options are available. Every homeowner's situation is unique, so we encourage you to call us at (847) 221-5600 to discuss which options might work best for your project and budget.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="cta-band-mount"
+  data-title="Ready to Start Your Project?"
+  data-sub="Get your free estimate today. We'll walk you through every step of the process.">
+</div>
+<div id="footer-mount"></div>
+<script src="js/shared.js"></script>
+<script>
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Service Areas | Countryside Roofing, Siding &amp; Windows</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;1,9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/shared.css"/>
+<style>
+/* ── MAP VISUAL ── */
+.map-section { background: var(--green); padding: 72px 0; }
+.map-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.map-visual {
+  background: rgba(0,0,0,.2); border-radius: var(--rl);
+  border: 1px solid rgba(255,255,255,.12);
+  padding: 40px; position: relative; overflow: hidden; min-height: 420px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.map-visual::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 60% at 60% 40%, rgba(200,168,64,.18) 0%, transparent 60%);
+}
+/* Decorative suburb bubbles */
+.map-bubbles { position: relative; height: 260px; }
+.bubble {
+  position: absolute;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15);
+  border-radius: 20px; padding: 6px 14px;
+  font-size: 12px; color: rgba(255,255,255,.7); font-weight: 500;
+  white-space: nowrap; transition: all .3s;
+}
+.bubble:hover { background: var(--gold); color: var(--charcoal); border-color: var(--gold); transform: scale(1.05); }
+.bubble.highlight { background: var(--gold); color: var(--charcoal); border-color: var(--gold); font-weight: 700; }
+/* Position each bubble */
+.b1  { top: 10%;  left: 42%; }
+.b2  { top: 2%;   left: 15%; }
+.b3  { top: 18%;  left: 68%; }
+.b4  { top: 30%;  left: 5%;  }
+.b5  { top: 35%;  left: 55%; }
+.b6  { top: 22%;  left: 30%; }
+.b7  { top: 50%;  left: 20%; }
+.b8  { top: 48%;  left: 68%; }
+.b9  { top: 62%;  left: 40%; }
+.b10 { top: 68%;  left: 8%;  }
+.b11 { top: 70%;  left: 62%; }
+.b12 { top: 80%;  left: 30%; }
+.b13 { top: 5%;   left: 52%; }
+
+.map-cta-box {
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15);
+  border-radius: var(--r); padding: 22px; position: relative; z-index: 1;
+}
+.map-cta-box-title { font-family: 'Fraunces', serif; font-size: 18px; color: white; margin-bottom: 6px; }
+.map-cta-box-sub { font-size: 13px; color: rgba(255,255,255,.55); margin-bottom: 14px; }
+
+/* Right side text */
+.map-text .eyebrow.light { margin-bottom: 10px; }
+.map-text .section-title.light { margin-bottom: 16px; }
+.map-text .section-sub.light { margin-bottom: 32px; }
+.coverage-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+.cov-stat {
+  background: rgba(0,0,0,.2); border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--r); padding: 18px;
+}
+.cov-stat-n { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 700; color: var(--gold2); line-height: 1; }
+.cov-stat-l { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 4px; }
+
+/* ── AREAS GRID ── */
+.counties-section { padding: 88px 0; }
+.county-block { margin-bottom: 56px; }
+.county-block:last-child { margin-bottom: 0; }
+.county-header {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 22px;
+  padding-bottom: 16px; border-bottom: 2px solid var(--green-lt);
+}
+.county-icon {
+  width: 40px; height: 40px; background: var(--green-lt);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.county-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; color: var(--green); }
+.county-sub { font-size: 13px; color: var(--g4); margin-top: 2px; }
+.cities-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.city-card {
+  background: var(--white); border: 1px solid var(--g2);
+  border-radius: 10px; padding: 14px 16px;
+  transition: var(--transition); text-decoration: none;
+  display: block;
+}
+.city-card:hover { border-color: var(--green); box-shadow: var(--shadow-sm); background: var(--green-ltr); transform: translateY(-2px); }
+.city-name { font-size: 14px; font-weight: 600; color: var(--green); margin-bottom: 3px; }
+.city-county { font-size: 11px; color: var(--g4); }
+
+/* ── FEATURED AREAS ── */
+.featured-areas { padding: 88px 0; background: var(--off); }
+.featured-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.featured-card {
+  background: var(--white); border-radius: var(--rl);
+  border: 1px solid var(--g2); padding: 30px;
+  transition: var(--transition); position: relative; overflow: hidden;
+}
+.featured-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--green), var(--gold));
+  transform: scaleX(0); transform-origin: left; transition: transform .3s;
+}
+.featured-card:hover::before { transform: scaleX(1); }
+.featured-card:hover { box-shadow: var(--shadow-md); }
+.fc-icon {
+  width: 48px; height: 48px; background: var(--green-lt);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+}
+.fc-city { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; color: var(--green); margin-bottom: 6px; }
+.fc-desc { font-size: 14px; color: var(--g6); line-height: 1.65; margin-bottom: 14px; }
+.fc-services { display: flex; gap: 6px; flex-wrap: wrap; }
+.fc-svc {
+  background: var(--green-lt); color: var(--green);
+  padding: 4px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 600;
+}
+
+/* ── WHY LOCAL ── */
+.local-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.local-features { display: flex; flex-direction: column; gap: 22px; }
+.local-feat { display: flex; gap: 16px; }
+.local-ico {
+  width: 44px; height: 44px; background: var(--green-lt);
+  border-radius: 11px; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.local-title { font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 5px; }
+.local-text { font-size: 14px; color: var(--g6); line-height: 1.65; }
+.local-cta-box {
+  background: var(--green); border-radius: var(--rl); padding: 44px;
+  position: relative; overflow: hidden;
+}
+.local-cta-box::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 100% 0%, rgba(200,168,64,.2) 0%, transparent 55%);
+}
+.local-cta-title { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700; color: white; margin-bottom: 12px; position: relative; z-index: 1; }
+.local-cta-sub { font-size: 15px; color: rgba(255,255,255,.65); line-height: 1.7; margin-bottom: 28px; position: relative; z-index: 1; }
+.local-contact {
+  background: rgba(0,0,0,.2); border-radius: var(--r); padding: 20px;
+  margin-bottom: 20px; position: relative; z-index: 1;
+}
+.local-contact-label { font-size: 11px; color: rgba(255,255,255,.45); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+.local-contact-phone { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700; color: var(--gold2); }
+.local-hours { font-size: 13px; color: rgba(255,255,255,.5); margin-top: 4px; }
+
+/* ── NOT IN LIST ── */
+.not-listed {
+  background: var(--g1); border-radius: var(--rl);
+  border: 1px solid var(--g2); padding: 40px;
+  text-align: center; margin-top: 48px;
+}
+.nl-title { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; color: var(--green); margin-bottom: 10px; }
+.nl-text { font-size: 15px; color: var(--g6); line-height: 1.7; max-width: 500px; margin: 0 auto 22px; }
+
+@media (max-width: 1024px) {
+  .map-grid { grid-template-columns: 1fr; }
+  .coverage-stats { grid-template-columns: repeat(4, 1fr); }
+  .cities-grid { grid-template-columns: repeat(3, 1fr); }
+  .featured-grid { grid-template-columns: 1fr 1fr; }
+  .local-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 768px) {
+  .cities-grid { grid-template-columns: 1fr 1fr; }
+  .featured-grid { grid-template-columns: 1fr; }
+  .coverage-stats { grid-template-columns: 1fr 1fr; }
+  .map-bubbles { height: 200px; }
+}
+</style>
+</head>
+<body data-page="areas">
+<div id="topbar-mount"></div>
+<div id="nav-mount"></div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-grid"></div>
+  <div class="page-hero-in">
+    <div class="ph-eyebrow"><span class="ph-dot"></span>Where We Work</div>
+    <h1 class="ph-title fade-up">Proudly Serving<br/><em>Greater Chicagoland</em></h1>
+    <p class="ph-sub fade-up fade-up-1">Based in Streamwood, IL since 1973 — we've protected homes across dozens of suburbs throughout Cook, DuPage, Kane, Lake, and McHenry counties.</p>
+    <div class="ph-actions fade-up fade-up-2">
+      <a href="index.html#estimate" class="btn-primary">Get a Free Estimate</a>
+      <a href="tel:8472215600" class="btn-outline">📞 (847) 221-5600</a>
+    </div>
+  </div>
+</div>
+
+<div id="trust-bar-mount"></div>
+
+<!-- ── MAP + COVERAGE OVERVIEW ── -->
+<div class="map-section">
+  <div class="con">
+    <div class="map-grid">
+      <div class="map-visual">
+        <div class="map-bubbles">
+          <span class="bubble highlight b1">📍 Streamwood (HQ)</span>
+          <span class="bubble b2">Elgin</span>
+          <span class="bubble b3">Schaumburg</span>
+          <span class="bubble b4">Barrington</span>
+          <span class="bubble b5">Palatine</span>
+          <span class="bubble b6">Bartlett</span>
+          <span class="bubble b7">Algonquin</span>
+          <span class="bubble b8">Arlington Hts</span>
+          <span class="bubble b9">Bloomingdale</span>
+          <span class="bubble b10">Carpentersville</span>
+          <span class="bubble b11">Hoffman Estates</span>
+          <span class="bubble b12">Carol Stream</span>
+          <span class="bubble b13">Rolling Meadows</span>
+        </div>
+        <div class="map-cta-box">
+          <div class="map-cta-box-title">Not sure if we cover your area?</div>
+          <div class="map-cta-box-sub">Just call — we've likely worked in your neighborhood.</div>
+          <a href="tel:8472215600" class="btn-primary" style="font-size:14px;padding:11px 22px">📞 (847) 221-5600</a>
+        </div>
+      </div>
+      <div class="map-text">
+        <div class="eyebrow light">Coverage Area</div>
+        <h2 class="section-title light">50+ Years of Serving Chicagoland Communities</h2>
+        <p class="section-sub light">Our service area spans the entire Chicago northwest and western suburbs. If you're within about 40 miles of Streamwood, chances are we've worked in your neighborhood — or on your street.</p>
+        <div class="coverage-stats">
+          <div class="cov-stat"><div class="cov-stat-n">5</div><div class="cov-stat-l">Counties Served</div></div>
+          <div class="cov-stat"><div class="cov-stat-n">50+</div><div class="cov-stat-l">Communities</div></div>
+          <div class="cov-stat"><div class="cov-stat-n">600+</div><div class="cov-stat-l">Projects / Year</div></div>
+          <div class="cov-stat"><div class="cov-stat-n">1973</div><div class="cov-stat-l">Serving Since</div></div>
+        </div>
+        <a href="index.html#estimate" class="btn-primary">Request Your Free Estimate →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── AREAS BY COUNTY ── -->
+<div class="counties-section">
+  <div class="con">
+    <div class="sec-hdr">
+      <div class="eyebrow">Communities We Serve</div>
+      <h2 class="section-title">Find Your Area</h2>
+      <p class="section-sub">We serve the following communities throughout Chicagoland. Click any city to request an estimate.</p>
+    </div>
+
+    <!-- COOK COUNTY -->
+    <div class="county-block">
+      <div class="county-header">
+        <div class="county-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><div class="county-name">Cook County</div><div class="county-sub">Northwest & Western Chicago suburbs</div></div>
+      </div>
+      <div class="cities-grid">
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Arlington Heights</div><div class="city-county">Cook County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Bartlett</div><div class="city-county">Cook County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Elk Grove Village</div><div class="city-county">Cook County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Hanover Park</div><div class="city-county">Cook County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Hoffman Estates</div><div class="city-county">Cook County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Mount Prospect</div><div class="city-county">Cook County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Palatine</div><div class="city-county">Cook County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Rolling Meadows</div><div class="city-county">Cook County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Schaumburg</div><div class="city-county">Cook County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Streamwood ⭐</div><div class="city-county">Cook County · HQ</div></a>
+      </div>
+    </div>
+
+    <!-- DUPAGE COUNTY -->
+    <div class="county-block">
+      <div class="county-header">
+        <div class="county-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><div class="county-name">DuPage County</div><div class="county-sub">Western suburbs</div></div>
+      </div>
+      <div class="cities-grid">
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Addison</div><div class="city-county">DuPage County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Bloomingdale</div><div class="city-county">DuPage County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Carol Stream</div><div class="city-county">DuPage County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Glendale Heights</div><div class="city-county">DuPage County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Itasca</div><div class="city-county">DuPage County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Lombard</div><div class="city-county">DuPage County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Medinah</div><div class="city-county">DuPage County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Naperville</div><div class="city-county">DuPage County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Roselle</div><div class="city-county">DuPage County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Villa Park</div><div class="city-county">DuPage County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">West Chicago</div><div class="city-county">DuPage County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Wood Dale</div><div class="city-county">DuPage County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Burr Ridge</div><div class="city-county">DuPage County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Hinsdale</div><div class="city-county">DuPage County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Downers Grove</div><div class="city-county">DuPage County</div></a>
+      </div>
+    </div>
+
+    <!-- KANE COUNTY -->
+    <div class="county-block">
+      <div class="county-header">
+        <div class="county-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><div class="county-name">Kane County</div><div class="county-sub">Fox River valley communities</div></div>
+      </div>
+      <div class="cities-grid">
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Algonquin</div><div class="city-county">Kane County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Carpentersville</div><div class="city-county">Kane County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">East Dundee</div><div class="city-county">Kane County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Elgin</div><div class="city-county">Kane County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Geneva</div><div class="city-county">Kane County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Saint Charles</div><div class="city-county">Kane County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Sleepy Hollow</div><div class="city-county">Kane County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">South Elgin</div><div class="city-county">Kane County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Wayne</div><div class="city-county">Kane County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">West Dundee</div><div class="city-county">Kane County</div></a>
+      </div>
+    </div>
+
+    <!-- LAKE COUNTY -->
+    <div class="county-block">
+      <div class="county-header">
+        <div class="county-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><div class="county-name">Lake County</div><div class="county-sub">North shore and northwest suburbs</div></div>
+      </div>
+      <div class="cities-grid">
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Barrington</div><div class="city-county">Lake County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Barrington Hills</div><div class="city-county">Lake County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Deer Park</div><div class="city-county">Lake County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Inverness</div><div class="city-county">Lake County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Kildeer</div><div class="city-county">Lake County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Lake Barrington</div><div class="city-county">Lake County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">North Barrington</div><div class="city-county">Lake County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">South Barrington</div><div class="city-county">Lake County</div></a>
+      </div>
+    </div>
+
+    <!-- MCHENRY COUNTY -->
+    <div class="county-block">
+      <div class="county-header">
+        <div class="county-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><div class="county-name">McHenry County</div><div class="county-sub">Far northwest suburbs</div></div>
+      </div>
+      <div class="cities-grid">
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Crystal Lake</div><div class="city-county">McHenry County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Cary</div><div class="city-county">McHenry County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Fox River Grove</div><div class="city-county">McHenry County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Huntley</div><div class="city-county">McHenry County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">Lake in the Hills</div><div class="city-county">McHenry County</div></a>
+        <a href="index.html#estimate" class="city-card"><div class="city-name">McHenry</div><div class="city-county">McHenry County</div></a>
+      </div>
+    </div>
+
+    <div class="not-listed">
+      <div class="nl-title">Don't see your city?</div>
+      <div class="nl-text">We may still serve your area — our coverage extends throughout greater Chicagoland. Give us a call and we'll let you know right away.</div>
+      <a href="tel:8472215600" class="btn-green">📞 Call (847) 221-5600</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── FEATURED AREAS ── -->
+<div class="featured-areas">
+  <div class="con">
+    <div class="sec-hdr-c">
+      <div class="eyebrow">Where We Work Most</div>
+      <h2 class="section-title">Our Most Active Service Communities</h2>
+      <p class="section-sub">These are some of the communities where we do the most work — and where our neighbors know us best.</p>
+    </div>
+    <div class="featured-grid">
+      <div class="featured-card">
+        <div class="fc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+        <div class="fc-city">Schaumburg, IL</div>
+        <div class="fc-desc">One of our most active markets. We've protected hundreds of Schaumburg homes from Chicago's harsh winters and severe summer storms.</div>
+        <div class="fc-services"><span class="fc-svc">Roofing</span><span class="fc-svc">Siding</span><span class="fc-svc">Windows</span></div>
+      </div>
+      <div class="featured-card">
+        <div class="fc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+        <div class="fc-city">Barrington, IL</div>
+        <div class="fc-desc">Our teams regularly work throughout the Barrington area, handling everything from luxury home siding to full roof replacements.</div>
+        <div class="fc-services"><span class="fc-svc">Roofing</span><span class="fc-svc">Siding</span><span class="fc-svc">Gutters</span></div>
+      </div>
+      <div class="featured-card">
+        <div class="fc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+        <div class="fc-city">Palatine, IL</div>
+        <div class="fc-desc">Palatine homeowners have trusted Countryside for decades. We're familiar with the housing stock and common issues in this area.</div>
+        <div class="fc-services"><span class="fc-svc">Roofing</span><span class="fc-svc">Storm Damage</span><span class="fc-svc">Windows</span></div>
+      </div>
+      <div class="featured-card">
+        <div class="fc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+        <div class="fc-city">Arlington Heights, IL</div>
+        <div class="fc-desc">We've completed hundreds of projects in Arlington Heights — from simple repairs to complete exterior transformations.</div>
+        <div class="fc-services"><span class="fc-svc">Siding</span><span class="fc-svc">Roofing</span><span class="fc-svc">Windows</span></div>
+      </div>
+      <div class="featured-card">
+        <div class="fc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+        <div class="fc-city">Naperville, IL</div>
+        <div class="fc-desc">From older ranch-style homes to newer construction, our Naperville projects span every style of home and every type of exterior service.</div>
+        <div class="fc-services"><span class="fc-svc">Roofing</span><span class="fc-svc">Siding</span><span class="fc-svc">Insurance Claims</span></div>
+      </div>
+      <div class="featured-card">
+        <div class="fc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="fc-city">Streamwood, IL ⭐</div>
+        <div class="fc-desc">Our home base since 1973. We know this community inside and out — many of our team members are Streamwood residents themselves.</div>
+        <div class="fc-services"><span class="fc-svc">All Services</span><span class="fc-svc">Emergency Response</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── WHY LOCAL ── -->
+<div class="section">
+  <div class="con">
+    <div class="local-grid">
+      <div>
+        <div class="eyebrow">Why Local Matters</div>
+        <h2 class="section-title">We Know Chicagoland Because We Live Here</h2>
+        <p style="font-size:16px;color:var(--g6);line-height:1.8;margin-bottom:32px">There's a big difference between a contractor who works in your area and one who's been part of your community for 50 years. We understand the local climate, the common roofing and siding challenges specific to this region, and what homeowners in each community expect.</p>
+        <div class="local-features">
+          <div class="local-feat">
+            <div class="local-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><div class="local-title">Licensed for Illinois & Wisconsin</div><div class="local-text">We hold active contractor licenses in both IL and WI, ensuring all work meets or exceeds local code requirements.</div></div>
+          </div>
+          <div class="local-feat">
+            <div class="local-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div><div class="local-title">Fast Response Times</div><div class="local-text">Because we're local, we can respond quickly — especially important after a storm when every homeowner in the area needs help at once.</div></div>
+          </div>
+          <div class="local-feat">
+            <div class="local-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100 8 4 4 0 000-8z"/></svg></div>
+            <div><div class="local-title">Community Reputation at Stake</div><div class="local-text">We've built our reputation in this community over 50 years. Every job we do is an advertisement — and we take that seriously.</div></div>
+          </div>
+          <div class="local-feat">
+            <div class="local-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d6e30" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+            <div><div class="local-title">We Know the Permit Process</div><div class="local-text">Every suburb has different permitting requirements. We handle the paperwork and know exactly what each municipality requires.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="local-cta-box">
+        <div class="local-cta-title">Ready for a Free Estimate in Your Area?</div>
+        <div class="local-cta-sub">Call us or fill out our online form. We respond within 24 hours and can usually schedule an on-site visit within the week.</div>
+        <div class="local-contact">
+          <div class="local-contact-label">Call Us Directly</div>
+          <div class="local-contact-phone">(847) 221-5600</div>
+          <div class="local-hours">Mon–Fri 7am–8pm · Sat 7am–5pm</div>
+        </div>
+        <a href="index.html#estimate" class="btn-primary" style="width:100%;justify-content:center">Request Online Estimate →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="cta-band-mount"
+  data-title="Your Neighbor for Over 50 Years."
+  data-sub="Chicagoland homeowners have trusted Countryside since 1973. Let us earn your trust too.">
+</div>
+<div id="footer-mount"></div>
+<script src="js/shared.js"></script>
+</body>
+</html>
