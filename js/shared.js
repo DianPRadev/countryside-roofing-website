@@ -2,7 +2,7 @@
 
 const CURRENT_PAGE = document.body.dataset.page || '';
 
-const LOGO_URL = 'https://www.countrysideroofinginc.com/wp-content/uploads/2023/05/Countryside-Logo.png';
+const LOGO_URL = 'logo.png';
 
 function renderTopbar() {
   return `
