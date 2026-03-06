@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Countryside Roofing, Siding &amp; Windows | Since 1973 | Streamwood, IL</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;1,9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/shared.css"/>
+<style>
+/* ── HERO ── */
+.hero {
+  background: var(--green);
+  min-height: 92vh;
+  display: flex; align-items: center;
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 65% 55% at 80% 50%, rgba(200,168,64,.15) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 75% at 5% 85%, rgba(0,0,0,.22) 0%, transparent 55%);
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+.hero-roof-deco {
+  position: absolute; bottom: 0; right: -40px;
+  width: 48%; opacity: .055; pointer-events: none;
+}
+.hero-in {
+  max-width: 1220px; margin: 0 auto; padding: 88px 28px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+  align-items: center; position: relative; z-index: 2; width: 100%;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(200,168,64,.18); border: 1px solid rgba(200,168,64,.35);
+  color: var(--gold2); font-size: 11.5px; font-weight: 600;
+  padding: 5px 14px; border-radius: 20px;
+  letter-spacing: .06em; text-transform: uppercase; margin-bottom: 22px;
+}
+.hero-dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; }
+.hero-h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(34px, 4.8vw, 58px);
+  font-weight: 800; color: var(--white); line-height: 1.07; margin-bottom: 20px;
+}
+.hero-h1 em { font-style: italic; color: var(--gold2); }
+.hero-sub {
+  font-size: 17px; color: rgba(255,255,255,.65);
+  line-height: 1.75; margin-bottom: 36px; max-width: 500px;
+}
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
+.hero-stats { display: flex; gap: 40px; }
+.hs-n {
+  font-family: 'Fraunces', serif; font-size: 32px; font-weight: 800;
+  color: var(--white); line-height: 1;
+}
+.hs-l { font-size: 12px; color: rgba(255,255,255,.45); margin-top: 4px; }
+
+/* LEAD FORM CARD */
+.lead-card {
+  background: var(--white); border-radius: 20px;
+  padding: 36px; box-shadow: 0 24px 80px rgba(0,0,0,.22);
+}
+.lc-title { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 700; color: var(--green); margin-bottom: 4px; }
+.lc-sub { font-size: 13px; color: var(--g4); margin-bottom: 24px; }
+.form-group { margin-bottom: 14px; }
+.form-label { font-size: 12px; font-weight: 600; color: var(--g6); display: block; margin-bottom: 5px; }
+.form-input {
+  width: 100%; padding: 11px 14px; border: 1.5px solid var(--g2);
+  border-radius: 8px; font-size: 14px; font-family: 'DM Sans', sans-serif;
+  color: var(--g8); background: var(--off); outline: none; transition: border-color .2s;
+}
+.form-input:focus { border-color: var(--green); background: white; }
+.form-select {
+  width: 100%; padding: 11px 14px; border: 1.5px solid var(--g2);
+  border-radius: 8px; font-size: 14px; font-family: 'DM Sans', sans-serif;
+  color: var(--g8); background: var(--off); outline: none; cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a9e8a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center;
+}
+.form-submit {
+  width: 100%; background: var(--green); color: white;
+  padding: 14px; border: none; border-radius: 9px;
+  font-size: 15px; font-weight: 700; font-family: 'DM Sans', sans-serif;
+  cursor: pointer; transition: background .2s; margin-top: 4px;
+}
+.form-submit:hover { background: var(--green2); }
+.form-note {
+  display: flex; align-items: center; gap: 7px;
+  margin-top: 12px; font-size: 12px; color: var(--g4);
+}
+
+/* ── SERVICES GRID ── */
+.svc-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.svc-card {
+  background: var(--off); border-radius: 18px; padding: 32px 26px;
+  border: 1px solid var(--g2); transition: var(--transition);
+  text-decoration: none; color: inherit; display: block; position: relative; overflow: hidden;
+}
+.svc-card::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 4px; height: 100%; background: var(--green);
+  transform: scaleY(0); transition: transform .3s; transform-origin: bottom;
+}
+.svc-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: var(--green); }
+.svc-card:hover::before { transform: scaleY(1); }
+.svc-card.featured { background: var(--green); border-color: var(--green); }
+.svc-card.featured::before { background: var(--gold); }
+.svc-card-ico {
+  width: 52px; height: 52px; background: var(--green);
+  border-radius: 13px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
+}
+.svc-card.featured .svc-card-ico { background: rgba(255,255,255,.15); }
+.svc-card-name { font-size: 19px; font-weight: 700; color: var(--green); margin-bottom: 9px; }
+.svc-card.featured .svc-card-name { color: white; }
+.svc-card-desc { font-size: 14px; color: var(--g6); line-height: 1.65; margin-bottom: 18px; }
+.svc-card.featured .svc-card-desc { color: rgba(255,255,255,.65); }
+.svc-card-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.svc-card-list li { font-size: 13px; color: var(--g6); display: flex; align-items: center; gap: 8px; }
+.svc-card.featured .svc-card-list li { color: rgba(255,255,255,.7); }
+.svc-card-list li::before { content: ''; width: 5px; height: 5px; background: var(--green2); border-radius: 50%; flex-shrink: 0; }
+.svc-card.featured .svc-card-list li::before { background: var(--gold); }
+.svc-card-arrow {
+  display: inline-flex; align-items: center; gap: 5px;
+  margin-top: 20px; font-size: 13px; font-weight: 600; color: var(--green);
+}
+.svc-card.featured .svc-card-arrow { color: var(--gold2); }
+
+/* ── WHY US ── */
+.why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+.why-feats { display: flex; flex-direction: column; gap: 26px; }
+.why-feat { display: flex; gap: 17px; }
+.why-feat-ico {
+  width: 46px; height: 46px; background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.15); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.why-feat-title { font-size: 16px; font-weight: 700; color: white; margin-bottom: 4px; }
+.why-feat-text { font-size: 14px; color: rgba(255,255,255,.58); line-height: 1.65; }
+.why-stats-box {
+  background: rgba(0,0,0,.2); border-radius: 20px; padding: 44px;
+  border: 1px solid rgba(255,255,255,.12); position: relative;
+}
+.why-stat-row {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding-bottom: 22px; margin-bottom: 22px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.why-stat-row:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+.why-stat-n {
+  font-family: 'Fraunces', serif; font-size: 46px; font-weight: 700;
+  color: var(--gold2); line-height: 1;
+}
+.why-stat-l { font-size: 13px; color: rgba(255,255,255,.45); margin-top: 3px; }
+.why-stat-d { font-size: 13px; color: rgba(255,255,255,.35); max-width: 130px; text-align: right; }
+.why-gold-badge {
+  position: absolute; bottom: -14px; right: 24px;
+  background: var(--gold); color: var(--charcoal);
+  padding: 12px 18px; border-radius: 13px; text-align: center;
+  box-shadow: 0 8px 28px rgba(200,168,64,.4);
+}
+.wgb-n { font-size: 24px; font-weight: 800; line-height: 1; }
+.wgb-t { font-size: 10px; opacity: .72; margin-top: 2px; }
+
+/* ── PROCESS STRIP ── */
+.proc-steps { display: grid; grid-template-columns: repeat(4, 1fr); position: relative; }
+.proc-steps::before {
+  content: ''; position: absolute; top: 29px; left: 12.5%; right: 12.5%;
+  height: 2px; background: linear-gradient(90deg, var(--green), var(--gold));
+}
+.proc-step { text-align: center; padding: 0 18px; }
+.proc-num {
+  width: 58px; height: 58px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 800; color: white;
+  margin: 0 auto 18px; position: relative; z-index: 1;
+  border: 4px solid var(--g1);
+}
+.proc-step:nth-child(1) .proc-num { background: var(--green); }
+.proc-step:nth-child(2) .proc-num { background: var(--green2); }
+.proc-step:nth-child(3) .proc-num { background: var(--green3); }
+.proc-step:nth-child(4) .proc-num { background: var(--gold); color: var(--charcoal); }
+.proc-title { font-size: 15px; font-weight: 700; color: var(--green); margin-bottom: 7px; }
+.proc-desc { font-size: 13px; color: var(--g6); line-height: 1.65; }
+
+/* ── TESTIMONIALS ── */
+.testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.testi-card {
+  background: var(--off); border-radius: 18px; padding: 28px;
+  border: 1px solid var(--g2); display: flex; flex-direction: column;
+}
+.testi-card.featured { background: var(--green); border-color: var(--green); }
+.testi-stars { color: var(--gold); font-size: 13px; letter-spacing: 2px; margin-bottom: 14px; }
+.testi-text {
+  font-size: 14px; color: var(--g6); line-height: 1.75;
+  font-style: italic; flex: 1; margin-bottom: 20px;
+}
+.testi-card.featured .testi-text { color: rgba(255,255,255,.75); }
+.testi-author { display: flex; align-items: center; gap: 11px; }
+.testi-av {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--green); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 13px; flex-shrink: 0;
+}
+.testi-card.featured .testi-av { background: rgba(255,255,255,.18); }
+.testi-name { font-weight: 700; font-size: 14px; color: var(--green); }
+.testi-card.featured .testi-name { color: white; }
+.testi-loc { font-size: 12px; color: var(--g4); }
+.testi-card.featured .testi-loc { color: rgba(255,255,255,.4); }
+
+/* ── STORM BAND ── */
+.storm-band {
+  background: linear-gradient(135deg, var(--green2), var(--charcoal));
+  padding: 68px 0;
+}
+.storm-in {
+  max-width: 1220px; margin: 0 auto; padding: 0 28px;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 36px; flex-wrap: wrap;
+}
+.storm-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(22px, 3vw, 36px); font-weight: 700; color: white; margin-bottom: 9px;
+}
+.storm-sub { font-size: 15px; color: rgba(255,255,255,.7); }
+.storm-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* ── AREAS STRIP ── */
+.areas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.area-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+.area-tag {
+  background: white; border: 1px solid var(--g2); color: var(--g6);
+  padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500;
+  transition: var(--transition);
+}
+.area-tag:hover { border-color: var(--green); color: var(--green); }
+.phone-box {
+  background: var(--green); border-radius: 18px; padding: 36px; color: white; margin-bottom: 16px;
+}
+.pb-label { font-size: 11px; opacity: .55; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+.pb-num {
+  font-family: 'Fraunces', serif; font-size: 34px; font-weight: 700; color: var(--gold2); margin-bottom: 9px;
+}
+.pb-hours { font-size: 13px; opacity: .6; line-height: 1.65; }
+.soft-cta { background: white; border-radius: 18px; padding: 28px; border: 1px solid var(--g2); }
+.sc-title { font-size: 17px; font-weight: 700; color: var(--green); margin-bottom: 7px; }
+.sc-text { font-size: 14px; color: var(--g6); line-height: 1.65; margin-bottom: 16px; }
+
+@media (max-width: 1024px) {
+  .hero-in { grid-template-columns: 1fr; gap: 44px; }
+  .svc-cards { grid-template-columns: 1fr 1fr; }
+  .why-grid { grid-template-columns: 1fr; gap: 44px; }
+  .areas-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .hero-in { padding: 60px 24px; }
+  .hero-stats { gap: 22px; }
+  .svc-cards { grid-template-columns: 1fr; }
+  .proc-steps { grid-template-columns: 1fr 1fr; }
+  .proc-steps::before { display: none; }
+  .testi-grid { grid-template-columns: 1fr; }
+  .storm-in { flex-direction: column; }
+}
+</style>
+</head>
+<body data-page="home">
+<div id="topbar-mount"></div>
+<div id="nav-mount"></div>
+
+<!-- ── HERO ── -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <svg class="hero-roof-deco" viewBox="0 0 700 450" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="350,30 650,200 650,440 50,440 50,200"/>
+    <rect x="265" y="272" width="170" height="168" fill="rgba(255,255,255,.5)"/>
+    <rect x="100" y="248" width="100" height="100" fill="rgba(255,255,255,.35)"/>
+    <rect x="500" y="248" width="100" height="100" fill="rgba(255,255,255,.35)"/>
+  </svg>
+
+  <div class="hero-in">
+    <!-- LEFT: Copy -->
+    <div class="fade-up">
+      <div class="hero-eyebrow"><span class="hero-dot"></span>Serving Chicagoland Since 1973</div>
+      <h1 class="hero-h1">Protecting Your Home,<br/><em>One Roof at a Time</em></h1>
+      <p class="hero-sub">Family-owned roofing, siding, and window experts with 50+ years of experience. Over 65% of our new customers come from referrals — and that says everything.</p>
+      <div class="hero-btns">
+        <a href="#estimate" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          Get a Free Estimate
+        </a>
+        <a href="tel:8472215600" class="btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8 19.79 19.79 0 01.22 1.18 2 2 0 012.22 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.66-.66a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+          (847) 221-5600
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="hs-n">50+</div><div class="hs-l">Years in Business</div></div>
+        <div><div class="hs-n">4.8★</div><div class="hs-l">619 Google Reviews</div></div>
+        <div><div class="hs-n">A+</div><div class="hs-l">BBB Rating</div></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Lead Form -->
+    <div class="lead-card fade-up fade-up-2" id="estimate">
+      <div class="lc-title">Get Your Free Estimate</div>
+      <div class="lc-sub">No obligation · Response within 24 hours</div>
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input class="form-input" type="text" placeholder="John Smith"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <input class="form-input" type="tel" placeholder="(847) 555-0000"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Service Needed</label>
+        <select class="form-select">
+          <option value="">Select a service...</option>
+          <option>Roof Repair or Replacement</option>
+          <option>Siding Installation</option>
+          <option>Window Replacement</option>
+          <option>Storm Damage / Insurance Claim</option>
+          <option>Gutters</option>
+          <option>Not sure — need an inspection</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">City / Zip Code</label>
+        <input class="form-input" type="text" placeholder="Schaumburg, IL 60173"/>
+      </div>
+      <button class="form-submit" onclick="this.textContent='✓ Sent! We\'ll be in touch soon.';this.style.background='#2d6e30';this.disabled=true">
+        Request My Free Estimate →
+      </button>
+      <div class="form-note">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8a9e8a" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Your info is private. No spam, ever.
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="trust-bar-mount"></div>
+
+<!-- ── SERVICES ── -->
+<section class="section" id="services">
+  <div class="con">
+    <div class="sec-hdr">
+      <div class="eyebrow">What We Do</div>
+      <h2 class="section-title">Complete Exterior Services<br/>for Your Home</h2>
+      <p class="section-sub">From routine repairs to full replacements — roofing, siding, windows, gutters, and insurance claims, all under one roof.</p>
+    </div>
+    <div class="svc-cards">
+      <a href="services.html#roofing" class="svc-card featured">
+        <div class="svc-card-ico">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="svc-card-name">Roofing</div>
+        <div class="svc-card-desc">Expert installation, repair, and replacement. We assess before we recommend — so you only pay for what you actually need.</div>
+        <ul class="svc-card-list">
+          <li>Full replacement &amp; tear-off</li>
+          <li>Repair, patching &amp; maintenance</li>
+          <li>Cedar shake &amp; flat roofs</li>
+          <li>Storm damage &amp; insurance claims</li>
+        </ul>
+        <div class="svc-card-arrow">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </a>
+      <a href="services.html#siding" class="svc-card">
+        <div class="svc-card-ico">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
+        </div>
+        <div class="svc-card-name">Siding</div>
+        <div class="svc-card-desc">Boost curb appeal and protect your home with premium LP SmartSide, James Hardie, vinyl, and cedar siding.</div>
+        <ul class="svc-card-list">
+          <li>Full replacement &amp; repair</li>
+          <li>Vinyl, fiber cement, cedar</li>
+          <li>Color &amp; style consultation</li>
+          <li>Soffit, fascia &amp; trim</li>
+        </ul>
+        <div class="svc-card-arrow">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </a>
+      <a href="services.html#windows" class="svc-card">
+        <div class="svc-card-ico">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+        </div>
+        <div class="svc-card-name">Windows</div>
+        <div class="svc-card-desc">Energy-efficient window installation that cuts heating/cooling costs while improving comfort, noise reduction, and appearance.</div>
+        <ul class="svc-card-list">
+          <li>Vinyl &amp; wood windows</li>
+          <li>Custom sizes &amp; specialty styles</li>
+          <li>Energy Star certified products</li>
+          <li>15–30% energy savings</li>
+        </ul>
+        <div class="svc-card-arrow">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </a>
+    </div>
+    <div style="text-align:center;margin-top:36px">
+      <a href="services.html" class="btn-green">View All Services →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHY US ── -->
+<section class="section bg-green" id="why">
+  <div class="con">
+    <div class="why-grid">
+      <div>
+        <div class="eyebrow light">Why Choose Us</div>
+        <h2 class="section-title light">Built on Trust,<br/>Backed by Results</h2>
+        <p class="section-sub light" style="margin-bottom:40px">Since 1973, we've taken a consultative approach — listening first, then recommending what's truly in your home's long-term best interest.</p>
+        <div class="why-feats">
+          <div class="why-feat">
+            <div class="why-feat-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8a840" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100 8 4 4 0 000-8z"/></svg></div>
+            <div>
+              <div class="why-feat-title">Family-Owned &amp; Operated</div>
+              <div class="why-feat-text">No corporate middlemen. When you call, you speak to people who actually work on your home.</div>
+            </div>
+          </div>
+          <div class="why-feat">
+            <div class="why-feat-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8a840" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div>
+              <div class="why-feat-title">Insurance Claim Experts</div>
+              <div class="why-feat-text">We handle the paperwork and work directly with your insurer to document damage and maximize your payout.</div>
+            </div>
+          </div>
+          <div class="why-feat">
+            <div class="why-feat-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8a840" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+            <div>
+              <div class="why-feat-title">Double Warranty Protection</div>
+              <div class="why-feat-text">Lifetime manufacturer material warranty + our own 5-year labor warranty on every project.</div>
+            </div>
+          </div>
+          <div class="why-feat">
+            <div class="why-feat-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8a840" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+            <div>
+              <div class="why-feat-title">Flexible Financing Available</div>
+              <div class="why-feat-text">Every homeowner's situation is unique. Call us to discuss payment options that work for your budget.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="position:relative;padding-bottom:28px">
+        <div class="why-stats-box">
+          <div class="why-stat-row">
+            <div><div class="why-stat-n">50+</div><div class="why-stat-l">Years Serving Chicagoland</div></div>
+            <div class="why-stat-d">Established 1973 — still family-run today.</div>
+          </div>
+          <div class="why-stat-row">
+            <div><div class="why-stat-n">65%</div><div class="why-stat-l">Customers from Referrals</div></div>
+            <div class="why-stat-d">Our best advertising is happy homeowners.</div>
+          </div>
+          <div class="why-stat-row">
+            <div><div class="why-stat-n">619</div><div class="why-stat-l">Google Reviews · 4.8 Stars</div></div>
+            <div class="why-stat-d">Trusted by hundreds of families.</div>
+          </div>
+        </div>
+        <div class="why-gold-badge"><div class="wgb-n">A+</div><div class="wgb-t">BBB Rated</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROCESS ── -->
+<section class="section bg-g1" id="process">
+  <div class="con">
+    <div class="sec-hdr-c">
+      <div class="eyebrow">How It Works</div>
+      <h2 class="section-title">Simple. Transparent. Done Right.</h2>
+      <p class="section-sub">From your first call to final clean-up, you'll know exactly what's happening every step of the way.</p>
+    </div>
+    <div class="proc-steps">
+      <div class="proc-step"><div class="proc-num">1</div><div class="proc-title">Free Consultation</div><div class="proc-desc">Call or fill out our form. We'll schedule a visit — zero pressure, zero obligation.</div></div>
+      <div class="proc-step"><div class="proc-num">2</div><div class="proc-title">On-Site Assessment</div><div class="proc-desc">We evaluate your home, document everything, and explain all options clearly.</div></div>
+      <div class="proc-step"><div class="proc-num">3</div><div class="proc-title">Detailed Proposal</div><div class="proc-desc">Transparent, itemized quote — materials, labor, timeline. No surprises, no hidden costs.</div></div>
+      <div class="proc-step"><div class="proc-num">4</div><div class="proc-title">Expert Installation</div><div class="proc-desc">Our own crews do the work. Daily updates, magnetic cleanup, final walkthrough.</div></div>
+    </div>
+    <div style="text-align:center;margin-top:44px">
+      <a href="process.html" class="btn-green">See Full Process →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="section" id="reviews">
+  <div class="con">
+    <div class="sec-hdr-c">
+      <div class="eyebrow">Customer Reviews</div>
+      <h2 class="section-title">What Chicagoland Homeowners Say</h2>
+      <p class="section-sub">4.8 stars across 619 Google reviews.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card featured">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"George was thorough, knowledgeable, and highly professional. He spent real time educating me on roofing materials. When the crew arrived, everything unfolded exactly as described — smoothly and like clockwork."</div>
+        <div class="testi-author">
+          <div class="testi-av">JR</div>
+          <div><div class="testi-name">J. Ramirez</div><div class="testi-loc">Barrington, IL · Google</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"We hired Countryside 20 years ago and just hired them again. Ken kept us informed the whole way, handled the insurance approval, and the crew exceeded our expectations. Our neighbors hired them too!"</div>
+        <div class="testi-author">
+          <div class="testi-av">SK</div>
+          <div><div class="testi-name">S. Kowalski</div><div class="testi-loc">Schaumburg, IL · Google</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"They removed and replaced all rotted wood before installing the new roof — which looks absolutely beautiful. Meticulous cleanup, great communication, and the quality is outstanding. 100% recommend."</div>
+        <div class="testi-author">
+          <div class="testi-av">MP</div>
+          <div><div class="testi-name">M. Peterson</div><div class="testi-loc">Streamwood, IL · Google</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STORM BAND ── -->
+<div class="storm-band">
+  <div class="storm-in">
+    <div>
+      <div class="storm-title">Storm Damage? We Handle Insurance Claims.</div>
+      <div class="storm-sub">Our team documents the damage and works directly with your insurer to maximize your payout.</div>
+    </div>
+    <div class="storm-btns">
+      <a href="#estimate" class="btn-primary">Get a Free Assessment</a>
+      <a href="tel:8472215600" class="btn-outline">📞 (847) 221-5600</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── SERVICE AREAS ── -->
+<section class="section bg-off" id="areas">
+  <div class="con">
+    <div class="areas-grid">
+      <div>
+        <div class="eyebrow">Where We Work</div>
+        <h2 class="section-title">Proudly Serving Greater Chicagoland</h2>
+        <p class="section-sub">Based in Streamwood, IL — we've protected homes across the Chicago suburbs since 1973.</p>
+        <div class="area-tags">
+          <span class="area-tag">Schaumburg</span>
+          <span class="area-tag">Streamwood</span>
+          <span class="area-tag">Barrington</span>
+          <span class="area-tag">Elgin</span>
+          <span class="area-tag">Hoffman Estates</span>
+          <span class="area-tag">Palatine</span>
+          <span class="area-tag">Arlington Heights</span>
+          <span class="area-tag">Bartlett</span>
+          <span class="area-tag">Carol Stream</span>
+          <span class="area-tag">Bloomingdale</span>
+          <span class="area-tag">Naperville</span>
+          <span class="area-tag">Roselle</span>
+          <span class="area-tag">Hanover Park</span>
+          <span class="area-tag">Rolling Meadows</span>
+          <span class="area-tag">Elk Grove Village</span>
+          <a href="areas.html" class="area-tag" style="color:var(--green);font-weight:600;border-color:var(--green)">+ 35 more areas →</a>
+        </div>
+      </div>
+      <div>
+        <div class="phone-box">
+          <div class="pb-label">Call Us Directly</div>
+          <div class="pb-num">(847) 221-5600</div>
+          <div class="pb-hours">Mon–Fri 7am–8pm · Sat 7am–5pm<br/>Fast response for storm emergencies.</div>
+        </div>
+        <div class="soft-cta">
+          <div class="sc-title">Not sure what you need?</div>
+          <p class="sc-text">Our reps give honest assessments — we'll recommend what your home truly needs, even if that's just a repair.</p>
+          <a href="#estimate" class="btn-green" style="font-size:14px;padding:11px 20px">Schedule Free Inspection →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="cta-band-mount"
+  data-title="Ready to Protect Your Home?"
+  data-sub="Get your free, no-pressure estimate today. 50+ years of quality. One phone call away.">
+</div>
+<div id="footer-mount"></div>
+<script src="js/shared.js"></script>
+</body>
+</html>
